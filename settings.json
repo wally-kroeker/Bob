@@ -64,83 +64,23 @@
   "enabledMcpjsonServers": [],
   "hooks": {
     "PreToolUse": [],
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/capture-tool-output.ts"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/capture-session-summary.ts"
-          }
-        ]
-      }
-    ],
+    "PostToolUse": [],
+    "SessionEnd": [],
     "Notification": [],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/update-tab-titles.ts"
-          }
-        ]
-      }
-    ],
+    "UserPromptSubmit": [],
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "${PAI_DIR}/hooks/load-core-context.ts"
-          },
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/initialize-pai-session.ts"
           }
         ]
       }
     ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/stop-hook.ts"
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/subagent-stop-hook.ts"
-          }
-        ]
-      }
-    ],
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${PAI_DIR}/hooks/context-compression-hook.ts"
-          }
-        ]
-      }
-    ]
+    "Stop": [],
+    "SubagentStop": [],
+    "PreCompact": []
   },
   "statusLine": {
     "type": "command",

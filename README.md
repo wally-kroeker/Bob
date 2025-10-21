@@ -10,6 +10,8 @@
 
 ### **Open-source personal AI infrastructure for orchestrating your life and work**
 
+> **🤖 Bob Fork**: This is a personal fork of PAI customized for Wally's WSL2 environment. See [BOB_SETUP.md](./BOB_SETUP.md) for fork-specific setup. Upstream: [danielmiessler/Personal_AI_Infrastructure](https://github.com/danielmiessler/Personal_AI_Infrastructure)
+
 <br/>
 
 ![Static Badge](https://img.shields.io/badge/mission-upgrade_humans_using_AI-8B5CF6)

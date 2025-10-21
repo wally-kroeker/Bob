@@ -4,6 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## 🤖 Bob Fork Notice
+
+This is **Bob**, a personal fork of the Personal AI Infrastructure (PAI) project.
+
+**Fork Details**:
+- **Upstream**: [danielmiessler/Personal_AI_Infrastructure](https://github.com/danielmiessler/Personal_AI_Infrastructure)
+- **This Fork**: [wally-kroeker/Bob](https://github.com/wally-kroeker/Bob)
+- **Purpose**: Personalized PAI setup for Wally on WSL2/Linux
+- **Environment**: WSL2, Bun 1.3.0, Claude Code integration
+
+**Key Customizations**:
+- Simplified hooks configuration (SessionStart only)
+- WSL2-specific path configurations
+- Integration with Wally's publishing loop system
+- Custom skills and workflow automation
+
+**Development Workflow**:
+- Use `main` branch for Bob-specific customizations
+- Create `contrib/*` branches for upstream contributions
+- Sync regularly: `git fetch upstream && git merge upstream/main`
+- See [CONTRIBUTING_WORKFLOW.md](./CONTRIBUTING_WORKFLOW.md) for details
+
+**Global Configuration**: Runtime instructions for Bob are in `~/.claude/CLAUDE.md` (not this file)
+
+---
+
 ## 📋 Project Overview
 
 **Personal AI Infrastructure (PAI)** is an open-source personal AI system that orchestrates life and work using Claude Code with a skills-based context management architecture. It provides:
