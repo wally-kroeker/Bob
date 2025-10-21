@@ -61,3 +61,15 @@ out/
 private/
 secrets/
 credentials/
+
+# Personal configuration files                                                                                                                                                                │ │
+*.personal                                                                                                                                                                                    │ │
+settings.json.personal                                                                                                                                                                        │ │
+.mcp.json.personal                                                                                                                                                                            │ │
+
+# Personal documentation                                                                                                                                                                      │ │
+MY_*.md                                                                                                                                                                                       │ │
+MY_CUSTOMIZATIONS.md                                                                                                                                                                          │ │
+
+# WSL-specific                                                                                                                                                                                │ │
+.wslconfig                           
