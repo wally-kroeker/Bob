@@ -56,6 +56,7 @@ PAI/
 │   ├── research/          # Research methodology
 │   ├── ffuf/              # Web fuzzing tool integration
 │   ├── fabric/            # Fabric pattern integration
+│   ├── vikunja/           # Task management integration
 │   └── alex-hormozi-pitch/ # Business pitch framework
 ├── agents/                # Pre-configured agent personas (not activated by default)
 │   ├── engineer.md        # Full-stack engineer persona

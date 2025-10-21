@@ -459,6 +459,7 @@ ${PAI_DIR}/skills/
 ├── alex-hormozi-pitch/  # $100M Offers pitch framework
 ├── research/            # Multi-source research (requires API keys)
 ├── fabric/              # Intelligent Fabric pattern selection (242+ patterns)
+├── vikunja/             # Task management integration (Vikunja API)
 ├── web-scraping/        # Web data extraction
 ├── chrome-devtools/     # Browser automation
 ├── youtube-extraction/  # YouTube transcript extraction
@@ -514,6 +515,7 @@ ${PAI_DIR}/skills/
 | **🎨 design** | UX/UI design with shadcn/ui and Figma integration | "Design a dashboard for analytics" |
 | **🔒 ffuf** | Web fuzzing for penetration testing | "Test this API for vulnerabilities" |
 | **📊 alex-hormozi-pitch** | Create irresistible offers using $100M Offers framework | "Create a pitch for my SaaS product" |
+| **✅ vikunja** | Task management and todo tracking | "What tasks do I have today?" |
 | **🌐 web-scraping** | Extract data from websites (BrightData + Apify) | "Scrape product listings from this site" |
 | **📖 ref-documentation** | Search technical docs (React, Next.js, 100+ frameworks) | "How do I use React hooks?" |
 | **▶️ youtube-extraction** | Extract transcripts and content from YouTube videos | "Summarize this YouTube video" |
