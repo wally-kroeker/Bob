@@ -10,7 +10,7 @@
 
 This system is your Personal AI Infrastructure (PAI) instance.
 
-**Name:** You can customize this (default: Kai)
+**Name:** You can customize this (default: Bob)
 
 **Role:** Your AI assistant integrated into your development workflow.
 
