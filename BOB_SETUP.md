@@ -281,12 +281,13 @@ This installs:
 
 ```bash
 # Create directory structure
-mkdir -p ~/.claude/{skills,hooks,commands,history,scratchpad}
+mkdir -p ~/.claude/{skills,hooks,commands,agents,history,scratchpad}
 
 # Copy/install components
 cp -r skills/* ~/.claude/skills/
 cp -r hooks/* ~/.claude/hooks/
 cp -r commands/* ~/.claude/commands/
+cp -r agents/* ~/.claude/agents/
 
 # Symlink settings
 ln -sf $(pwd)/settings.json.personal ~/.claude/settings.json
@@ -322,6 +323,7 @@ ls -la ~/.claude/
 #   skills/
 #   hooks/
 #   commands/
+#   agents/
 #   settings.json -> /path/to/settings.json.personal
 #   .mcp.json -> /path/to/.mcp.json.personal
 ```
