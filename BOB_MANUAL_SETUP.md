@@ -47,10 +47,14 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Key Principle:**
+**Key Principles:**
 - Bob fork = version control your customizations
 - ~/.claude/ = where Claude Code expects files
 - Symlinks bridge the two
+- **`$PAI_DIR` environment variable** = Upstream PAI design for portability (not a WSL2 fix!)
+
+**What PAI Got Right:**
+PAI uses the `$PAI_DIR` environment variable throughout hooks and commands, making it portable across Mac (`/Users/...`) and Linux (`/home/...`). This upstream design choice means the same hook code works on WSL2 without modification—just set `PAI_DIR` to your installation path.
 
 ---
 
@@ -135,6 +139,69 @@ git status
 ```
 
 **CHECKPOINT:** Custom skills and their data should be in Bob fork, data directories gitignored.
+
+---
+
+### Phase 2.5: Setup CORE Skill Privacy Pattern
+
+The CORE skill contains your AI's identity and personal contacts. We need to protect this data.
+
+**Why This Matters**: The upstream CORE/SKILL.md is a template with [CUSTOMIZE] placeholders. If you put real personal data directly in SKILL.md, it gets committed to your public fork. The solution: use the `data/` pattern.
+
+**Setup CORE Privacy:**
+
+```bash
+cd /home/walub/projects/Personal_AI_Infrastructure/.claude/skills/CORE
+
+# 1. Create data directory
+mkdir -p data
+
+# 2. Check if CORE/SKILL.md already has personal data
+head -20 SKILL.md
+# If you see [CUSTOMIZE] placeholders, it's still a template (good!)
+# If you see real names/emails, you need to move them
+
+# 3. Copy template to personal version
+cp SKILL.md data/SKILL.md.personal
+
+# 4. Edit your personal version with REAL data
+nano data/SKILL.md.personal
+# Replace ALL [CUSTOMIZE] placeholders with:
+#   - Your AI's actual name (e.g., "Bob", "Nova", "Atlas")
+#   - Your real contacts with real email addresses
+#   - Your actual preferences and stack choices
+#   - Your specific security warnings
+
+# 5. Restore template (if you accidentally customized SKILL.md)
+git checkout .claude/skills/CORE/SKILL.md
+# This gets the clean template from your last commit
+```
+
+**Verify Privacy Protection:**
+
+```bash
+cd /home/walub/projects/Personal_AI_Infrastructure
+
+# Check gitignore covers data/
+cat .gitignore | grep "skills/\*/data"
+# Should show: .claude/skills/*/data/
+
+# Verify data/ directory is ignored
+git status
+# Should NOT show: .claude/skills/CORE/data/SKILL.md.personal
+
+# Verify template is still clean
+cat .claude/skills/CORE/SKILL.md | grep "\[CUSTOMIZE\]" | head -3
+# Should show [CUSTOMIZE] placeholders (not your real data)
+```
+
+**Understanding the Pattern:**
+- `CORE/SKILL.md` = Template (committed, public-safe)
+- `CORE/data/SKILL.md.personal` = Your real data (gitignored, private)
+- Runtime loads from template (since data/ isn't symlinked separately)
+- When you customize CORE, edit the template with [YOUR-DATA] format, not real data
+
+**CHECKPOINT:** CORE template is clean, personal data is in data/ directory (gitignored).
 
 ---
 

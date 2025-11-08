@@ -36,6 +36,121 @@ How to keep your Bob fork in sync with upstream PAI while preserving your custom
 
 ---
 
+## Understanding Your Fork Position
+
+### "X Commits Ahead" Is Normal and Correct
+
+When you run `git status`, you'll often see:
+
+```bash
+Your branch is ahead of 'upstream/main' by 12 commits.
+```
+
+**This is CORRECT and EXPECTED!** Those commits are YOUR customizations:
+
+```bash
+git log --oneline -12
+# 3ee81b5 Merge upstream into Bob fork
+# 1b6df83 feat(project/bob): add custom skills and WSL2 docs
+# 6e67bd9 feat(project/bob): fix taskman skill conflicts
+# 95feed4 chore(project/bob): merge upstream v0.6.0
+# ... (your custom work)
+```
+
+### Fork Philosophy
+
+**Your Fork = Framework + Customizations**
+
+| Component | Source | Your Fork Status |
+|-----------|--------|------------------|
+| PAI Framework | Upstream | ✅ Synced via merge |
+| Custom Skills | You | ✅ Your additions |
+| WSL2 Documentation | You | ✅ Your additions |
+| Custom Commands | You | ✅ Your additions |
+| Bob Identity | You | ✅ Your customizations |
+
+**Being "ahead" means**:
+- ✅ You have customizations (good!)
+- ✅ You're version controlling YOUR work
+- ✅ You can contribute improvements back
+- ✅ You can share your fork with others
+
+**Being "ahead" does NOT mean**:
+- ❌ You're out of sync (you can still merge upstream)
+- ❌ You're doing something wrong
+- ❌ You should "catch up" by deleting your work
+
+### What About Upstream Deletions?
+
+When Daniel (upstream maintainer) deletes files from PAI, you might see:
+
+```bash
+git fetch upstream
+git diff --name-status HEAD..upstream/main
+
+D    .claude/skills/taskman/SKILL.md
+D    .claude/skills/vikunja/SKILL.md
+D    BOB_SETUP.md
+```
+
+**This is EXPECTED** - Daniel is cleaning up his personal content:
+- He removed HIS personal skills (taskman, vikunja)
+- He removed HIS personal documentation
+- He removed HIS personal commands
+
+**Your customizations are SAFE**:
+- Your taskman skill stays (it's YOUR addition)
+- Your Bob docs stay (they're YOUR additions)
+- Your custom commands stay (they're YOUR additions)
+
+Git recognizes these as YOUR unique additions that don't conflict with upstream deletions.
+
+### Real Example: Recent Upstream Sync
+
+```bash
+# Before sync
+git status
+# Your branch is ahead of 'upstream/main' by 11 commits
+
+# Fetch upstream
+git fetch upstream
+# Upstream has 1 new commit
+
+# Check what changed
+git log HEAD..upstream/main --oneline
+# 332d7a1 Add Star History chart to README
+
+git diff --stat HEAD..upstream/main
+# Shows many deletions (Daniel's personal content)
+# README.md | 7 +++  (the only real change)
+
+# Merge
+git merge upstream/main
+# Auto-merging README.md
+# Merge made by 'ort' strategy
+# README.md | 7 +++++++
+# 1 file changed, 7 insertions(+)
+
+# After sync
+git status
+# Your branch is ahead of 'upstream/main' by 12 commits
+# (Your 11 previous + 1 merge commit)
+```
+
+**Result**: Clean merge, all your customizations preserved, you gain the Star History chart improvement.
+
+### When To Worry
+
+You should investigate if you see:
+
+- ⚠️ "Your branch is BEHIND upstream" - You haven't synced in a while
+- ⚠️ Merge conflicts in files you didn't customize
+- ⚠️ Breaking changes in upstream (check CHANGELOG/README)
+
+But being "ahead" is the normal, healthy state of a customized fork.
+
+---
+
 ## Weekly Sync: Upstream → Bob Fork
 
 Run this weekly to stay current with upstream improvements.

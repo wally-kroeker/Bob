@@ -1,100 +1,120 @@
-# Bob Setup Guide
+# Bob Setup Guide - Complete Installation
 
-Complete setup and configuration guide for Bob, a personal fork of the Personal AI Infrastructure (PAI) project.
+**Complete setup guide for Bob, Wally's personal fork of the Personal AI Infrastructure (PAI) project adapted for WSL2.**
 
 ---
 
-## 📋 Overview
+## 📋 What Is Bob?
 
-**Bob** is Wally's personalized AI assistant built on the PAI framework. This fork customizes the upstream PAI project for:
-- WSL2/Linux environment
-- Simplified hooks configuration
-- Integration with personal publishing loop system
-- Custom skills and workflow automation
+**Bob** is a personal AI assistant built on the [Personal AI Infrastructure (PAI)](https://github.com/danielmiessler/Personal_AI_Infrastructure) framework. This fork customizes PAI for:
+
+- **WSL2/Linux environment** (Windows with WSL2)
+- **Custom skills** (task management, writing practice, business strategy)
+- **Personal data privacy** in a public fork
+- **Integration** with personal projects and workflows
 
 **Repository Structure**:
-- **Upstream**: [danielmiessler/Personal_AI_Infrastructure](https://github.com/danielmiessler/Personal_AI_Infrastructure)
-- **This Fork**: [wally-kroeker/Bob](https://github.com/wally-kroeker/Bob)
-- **Environment**: WSL2 on Windows, Bun 1.3.0, Claude Code
+- **Upstream**: [danielmiessler/Personal_AI_Infrastructure](https://github.com/danielmiessler/Personal_AI_Infrastructure) (original PAI framework)
+- **This Fork**: [wally-kroeker/Bob](https://github.com/wally-kroeker/Bob) (your customizations)
+- **Environment**: WSL2, Bun runtime, Claude Code
+
+---
+
+## 🎯 Fork Philosophy: Customization, Not Hiding
+
+**Important Concept**: This fork is about **version controlling your customizations**, not hiding PAI itself.
+
+### What's Public (Committed to Your Fork):
+- ✅ Custom skills (cognitive-loop, taskman, telos) - **framework code**
+- ✅ Setup documentation (BOB_MANUAL_SETUP.md, etc.)
+- ✅ Custom commands and slash commands
+- ✅ Template files (settings.json, CORE/SKILL.md with [CUSTOMIZE] placeholders)
+
+### What's Private (Gitignored):
+- ❌ Personal data (contacts, emails, API keys)
+- ❌ `*.personal` files (actual settings, MCP configs)
+- ❌ `*/data/` directories in skills (actual personal content)
+- ❌ `.env` files (API keys and secrets)
+
+**The Pattern**: Framework code is public, personal data is gitignored. You can share your skills and contribute back upstream without exposing private information.
 
 ---
 
 ## 🏗️ Architecture Overview
 
-### Two-Tier Data Architecture
-
-Bob uses a two-tier system to separate public code from private data:
-
-#### Tier 1: Repository (Public-Safe)
-**Location**: `/home/walub/projects/Personal_AI_Infrastructure/`
-**Purpose**: Template code and framework
-**Git Status**: Tracked, can be shared/contributed upstream
+### Two-Tier System
 
 ```
-/home/walub/projects/Personal_AI_Infrastructure/
-├── skills/              # Skill templates (public)
-├── agents/              # Agent templates (public)
-├── commands/            # Command templates (public)
-├── hooks/               # Hook implementation (public)
-├── documentation/       # Public docs
-├── settings.json        # TEMPLATE with ${PAI_DIR} variables
-├── .env.example         # Template (no real keys)
-├── CLAUDE.md            # Project development guide
-├── BOB_SETUP.md         # This file
-└── CONTRIBUTING_WORKFLOW.md  # Git workflows
+┌────────────────────────────────────────────────────────┐
+│ Bob Fork Repository (Version Controlled)               │
+│ /home/walub/projects/Personal_AI_Infrastructure/       │
+│                                                         │
+│ PUBLIC (Committed):                                     │
+│ ├── .claude/skills/*/SKILL.md (templates)              │
+│ ├── .claude/hooks/ (framework code)                    │
+│ ├── .claude/commands/ (slash commands)                 │
+│ ├── settings.json (template with ${PAI_DIR})           │
+│ └── BOB_*.md (documentation)                           │
+│                                                         │
+│ PRIVATE (Gitignored):                                   │
+│ ├── settings.json.personal (actual config)             │
+│ ├── .mcp.json.personal (MCP servers + tokens)          │
+│ ├── .env (API keys)                                    │
+│ ├── .claude/skills/*/data/ (personal content)          │
+│ └── MY_*.md (personal notes)                           │
+└────────────────────────────────────────────────────────┘
+                        │
+                        │ symlinked
+                        ▼
+┌────────────────────────────────────────────────────────┐
+│ Runtime Installation (~/.claude/)                      │
+│                                                         │
+│ Symlinked from repo:                                    │
+│ ├── skills/ → repo/.claude/skills/                     │
+│ ├── hooks/ → repo/.claude/hooks/                       │
+│ ├── commands/ → repo/.claude/commands/                 │
+│ ├── settings.json → repo/settings.json.personal        │
+│ └── .mcp.json → repo/.mcp.json.personal                │
+│                                                         │
+│ Real directories (not in repo):                         │
+│ ├── history/ (session logs)                            │
+│ ├── scratchpad/ (temporary work)                       │
+│ └── data/ (runtime data)                               │
+└────────────────────────────────────────────────────────┘
 ```
 
-#### Tier 2: Runtime Installation (Private)
-**Location**: `~/.claude/`
-**Purpose**: Actual personal data and configuration
-**Git Status**: NOT tracked, completely private
-
-```
-~/.claude/
-├── skills/
-│   └── PAI/
-│       └── SKILL.md     # Your REAL personal data
-├── settings.json        # Symlinked from *.personal files
-├── .mcp.json            # Your real MCP server configs
-├── .env                 # API keys (if copied here)
-├── hooks/               # Installed hook scripts
-├── commands/            # Installed commands
-├── history/             # Session logs (captured automatically)
-└── scratchpad/          # Temporary work
-    └── YYYY-MM-DD-*/    # Timestamped test directories
-```
-
-### Personal Files (Gitignored in Repository)
-
-These files live in the repository directory but are NEVER committed:
-
-- `*.personal` - Personal config files (settings.json.personal, .mcp.json.personal)
-- `MY_*.md` - Personal documentation (MY_CUSTOMIZATIONS.md)
-- `.env` - API keys and secrets
+**Key Benefits**:
+- Edit skills in repo → changes immediately visible via symlinks
+- Version control your customizations
+- Contribute improvements back upstream
+- Keep personal data private with gitignore
+- No build step, no deployment
 
 ---
 
-## 🚀 Initial Setup
+## 🚀 Quick Start (New Installation)
 
 ### Prerequisites
 
-1. **WSL2** installed on Windows
-2. **Bun** JavaScript runtime
+1. **WSL2** on Windows ([Microsoft Docs](https://learn.microsoft.com/en-us/windows/wsl/install))
+2. **Bun** JavaScript runtime:
    ```bash
    curl -fsSL https://bun.sh/install | bash
    ```
-3. **Git** configured with your identity
+3. **Git** configured:
    ```bash
    git config --global user.name "Your Name"
    git config --global user.email "your@email.com"
    ```
-4. **Claude Code** installed ([claude.ai/code](https://claude.ai/code))
+4. **Claude Code** ([claude.ai/code](https://claude.ai/code))
 
-### Clone and Configure
+### Installation Steps
+
+**Option 1: Start Fresh (Recommended)**
 
 ```bash
-# 1. Clone your Bob fork
-git clone https://github.com/wally-kroeker/Bob.git Personal_AI_Infrastructure
+# 1. Clone YOUR fork (replace with your GitHub username)
+git clone https://github.com/YOUR-USERNAME/Bob.git Personal_AI_Infrastructure
 cd Personal_AI_Infrastructure
 
 # 2. Add upstream remote
@@ -104,210 +124,315 @@ git fetch upstream
 # 3. Verify remotes
 git remote -v
 # Should show:
-#   origin    https://github.com/wally-kroeker/Bob.git
+#   origin    https://github.com/YOUR-USERNAME/Bob.git
 #   upstream  https://github.com/danielmiessler/Personal_AI_Infrastructure
 ```
 
-### Environment Configuration
+**Option 2: Fork Wally's Bob**
+
+If you want to start with my customizations:
 
 ```bash
-# 1. Copy environment template
-cp .env.example .env
+# 1. Fork wally-kroeker/Bob on GitHub to YOUR-USERNAME/Bob
 
-# 2. Edit with your API keys
-nano .env
+# 2. Clone your fork
+git clone https://github.com/YOUR-USERNAME/Bob.git Personal_AI_Infrastructure
+cd Personal_AI_Infrastructure
 
-# Required for research agents:
-#   PERPLEXITY_API_KEY=your_key
-#   GOOGLE_API_KEY=your_key
-# Optional:
-#   OPENAI_API_KEY=your_key
-#   APIFY_API_TOKEN=your_token
+# 3. Add upstreams
+git remote add upstream https://github.com/danielmiessler/Personal_AI_Infrastructure
+git remote add wally https://github.com/wally-kroeker/Bob
+git fetch --all
 ```
 
-### Personal Configuration Files
+### Configuration
 
 ```bash
-# 1. Create personal settings (if not exists)
+# 1. Create personal environment file
+cp .env.example .env
+nano .env
+# Add your API keys:
+#   PERPLEXITY_API_KEY=your_key
+#   GOOGLE_API_KEY=your_key
+#   OPENAI_API_KEY=your_key (if using)
+
+# 2. Create personal settings
 cp settings.json settings.json.personal
 nano settings.json.personal
 # Update:
-#   - DA: "Bob"
-#   - Any personal preferences
+#   "env": {
+#     "PAI_DIR": "/home/YOUR-USERNAME/projects/Personal_AI_Infrastructure/.claude"
+#   }
 
-# 2. Create personal MCP config (if not exists)
+# 3. Create personal MCP config (if needed)
 cp .mcp.json.example .mcp.json.personal
 nano .mcp.json.personal
-# Add your MCP server configurations and API tokens
+# Add your MCP server configurations
+```
+
+### Runtime Installation
+
+See **BOB_MANUAL_SETUP.md** for detailed step-by-step installation to `~/.claude/`.
+
+Quick version:
+```bash
+# Install PAI to runtime
+./setup.sh
+
+# Or manual installation (if setup.sh doesn't work on WSL2):
+# See BOB_MANUAL_SETUP.md for complete manual process
 ```
 
 ---
 
-## 📁 File Organization
+## 🔐 Security Model: Data/Code Separation
 
-### What Goes Where?
+### The Privacy Pattern
 
-| Data Type | Location | Git Status | Purpose |
-|-----------|----------|------------|---------|
-| **API Keys** | `.env` in repo root | ❌ Gitignored | Secrets, never committed |
-| **Personal Settings** | `settings.json.personal` | ❌ Gitignored | Your Claude Code config |
-| **Personal MCP** | `.mcp.json.personal` | ❌ Gitignored | MCP servers with tokens |
-| **Personal Notes** | `MY_CUSTOMIZATIONS.md` | ❌ Gitignored | Setup notes, private docs |
-| **Runtime Config** | `~/.claude/skills/PAI/SKILL.md` | ❌ Outside repo | Real personal data |
-| **Template Settings** | `settings.json` in repo | ✅ Committed | Portable template |
-| **Framework Code** | `skills/`, `agents/`, etc. | ✅ Committed | Public-safe code |
-| **Documentation** | `*.md` files (except MY_*) | ✅ Committed | Public docs |
+All personal data is kept private via **gitignore patterns**:
 
-### Security Rules
+```gitignore
+# Settings (personal configs)
+*.personal
+settings.json.personal
+.mcp.json.personal
 
-**NEVER commit**:
-- `.env` files (API keys)
-- `*.personal` files (personal config)
-- `MY_*.md` files (personal notes)
-- `~/.claude/*` contents (private data)
+# Secrets
+.env
+.env.*
 
-**ALWAYS check before commit**:
+# Personal notes
+MY_*.md
+
+# Skill data (all skills)
+.claude/skills/*/data/
+```
+
+### CORE Skill Privacy (Critical!)
+
+The CORE skill contains your AI's identity and your personal contacts. **Never commit personal data!**
+
+**Pattern**:
+- `CORE/SKILL.md` - Template with [CUSTOMIZE] placeholders (committed, public-safe)
+- `CORE/data/SKILL.md.personal` - Your actual personal data (gitignored, private)
+
+**Setup**:
 ```bash
-# 1. Check which repo you're in
+cd .claude/skills/CORE
+
+# 1. Copy template to personal version
+cp SKILL.md data/SKILL.md.personal
+
+# 2. Edit personal version with real data
+nano data/SKILL.md.personal
+# Replace [CUSTOMIZE] with:
+#   - Your AI's name
+#   - Your real contacts and emails
+#   - Your preferences
+#   - Your security warnings
+
+# 3. Verify data/ is gitignored
+git status
+# Should NOT show data/SKILL.md.personal
+```
+
+The `data/` directory is gitignored by wildcard pattern, so your personal information stays private.
+
+### Custom Skills Privacy
+
+When creating custom skills with personal data:
+
+```bash
+# Create skill
+mkdir -p .claude/skills/my-skill
+
+# Framework code (committed)
+nano .claude/skills/my-skill/SKILL.md
+
+# Personal data (gitignored)
+mkdir .claude/skills/my-skill/data
+nano .claude/skills/my-skill/data/my-data.md
+# Automatically gitignored by .claude/skills/*/data/ pattern
+```
+
+### Pre-Commit Safety
+
+Pre-commit hooks automatically scan for secrets:
+
+```bash
+# Caught by pre-commit:
+git commit
+# 🔍 Running pre-commit safety checks...
+# ⚠️  WARNING: Possible secret pattern detected
+```
+
+**Always verify before committing**:
+```bash
+# 1. Check repository
 git remote -v
 
-# 2. Review what you're committing
+# 2. Review changes
 git status
-git diff
+git diff --cached
 
-# 3. Ensure no secrets
-git diff | grep -i "api_key\|token\|password"
+# 3. Ensure no personal data
+git status | grep -E "(\.env|\.personal|data/)"
+# These should be untracked, not staged
 ```
 
 ---
 
-## 🎯 Global Configuration (~/.claude/CLAUDE.md)
+## 🎯 Understanding Your Fork Position
 
-Bob's runtime behavior is controlled by `~/.claude/CLAUDE.md`, which contains:
+### "X Commits Ahead" is Normal
 
-- Core Bob identity and personality
-- Repository management instructions
-- Personal data architecture explanation
-- Security reminders
-- When to update the Bob repository
-- Publishing loop integration
+```bash
+git status
+# Your branch is ahead of 'upstream/main' by 12 commits.
+```
 
-This file is loaded on every Claude Code session and guides Bob's behavior.
+**This is CORRECT!** Those commits are YOUR customizations:
+- Custom skills (cognitive-loop, taskman, telos)
+- WSL2 documentation
+- Custom commands
+- Personal workflow integrations
+
+### Upstream Deletions Are Expected
+
+When you sync with upstream, you may see Daniel delete files you have (taskman, vikunja, personal commands). **This is fine** - he's cleaning up his personal content from the public framework.
+
+**Your fork philosophy**:
+- Upstream = PAI framework
+- Your fork = Framework + YOUR customizations
+- Being ahead = Having customizations (good!)
+- Upstream deletions = He removed his personal stuff (doesn't affect yours)
 
 ---
 
-## 🔄 Git Workflows
+## 📚 Custom Skills in This Fork
 
-### Daily Personal Work
+### cognitive-loop
+**Purpose**: Daily Substack publishing practice with AI-powered memory
 
-Working on Bob customizations (not for upstream):
+**Features**:
+- Proactive workflow checklist
+- AI-powered quote extraction
+- Theme tracking across posts
+- Writing streak monitoring
+- Voice preservation (reviews previous posts)
+
+**Memory Files** (`data/` - gitignored):
+- `published-posts.md` - Archive with themes, quotes
+- `recurring-themes.md` - Theme evolution
+- `writing-streak.md` - Streak tracking
+
+### taskman
+**Purpose**: ADHD-friendly task management with Vikunja integration
+
+**Features**:
+- Natural language task capture
+- AI-native date parsing
+- Project routing intelligence
+- Priority using ADHD momentum principle
+- Context-aware suggestions (time/energy)
+
+**Architecture**:
+- Read: SQLite cache (fast)
+- Write: MCP tools → Vikunja API (authoritative)
+- Sync: `/taskman-refresh` command
+
+**Data** (`data/taskman.db` - gitignored):
+- 208 tasks, 14 projects, 18 labels
+
+### telos
+**Purpose**: Business strategy, goals, leads tracking
+
+**Features**:
+- Mission, vision, unique value
+- Goal tracking with deadlines
+- Risk monitoring (runway, pipeline)
+- Active leads management
+- Decision filters and wisdom
+
+**Why it matters**: Bob uses Telos to hold you accountable using YOUR goals.
+
+### vikunja
+**Purpose**: Technical reference for Vikunja API
+
+**Key Decision**: Removed user-facing triggers. Pure documentation skill to support TaskMan.
+
+---
+
+## 🔄 Daily Workflow
+
+### Working on Custom Skills
 
 ```bash
-# Make changes on main branch
-git checkout main
-nano skills/my-custom-skill/SKILL.md
+cd /home/walub/projects/Personal_AI_Infrastructure
 
-# Commit to your fork
-git add skills/my-custom-skill/
-git commit -m "feat(project/bob): add custom skill"
+# Edit skill
+nano .claude/skills/cognitive-loop/SKILL.md
+
+# Changes immediately visible in Claude Code (via symlink)
+
+# Commit when satisfied
+git add .claude/skills/cognitive-loop/
+git commit -m "feat(project/bob): improve cognitive-loop context"
 git push origin main
 ```
 
-### Contributing to Upstream
-
-Contributing improvements back to PAI:
+### Creating New Custom Skills
 
 ```bash
-# 1. Sync with upstream first
-git fetch upstream
-git checkout main
-git merge upstream/main
+# Create skill directory
+mkdir -p .claude/skills/my-new-skill
 
-# 2. Create contribution branch
-git checkout -b contrib/my-feature
+# Create SKILL.md with frontmatter
+cat > .claude/skills/my-new-skill/SKILL.md << 'EOF'
+---
+name: my-new-skill
+description: |
+  What this skill does and when to activate
+---
 
-# 3. Make changes
-nano documentation/some-improvement.md
+# My New Skill
 
-# 4. Commit
-git add documentation/some-improvement.md
-git commit -m "docs: improve setup documentation"
+## When to Activate
+- Trigger phrases
 
-# 5. Push to YOUR fork
-git push origin contrib/my-feature
+## Content
+[Your skill documentation]
+EOF
 
-# 6. Create PR on GitHub:
-#    Base: danielmiessler/Personal_AI_Infrastructure:main
-#    Head: wally-kroeker/Bob:contrib/my-feature
+# If skill has personal data, use data/ directory
+mkdir .claude/skills/my-new-skill/data
+# Automatically gitignored
+
+# Test in Claude Code
+
+# Commit skill (data stays private)
+git add .claude/skills/my-new-skill/
+git commit -m "feat(project/bob): add my-new-skill"
+git push origin main
 ```
 
-### Syncing with Upstream
-
-Keep Bob updated with upstream PAI improvements:
+### Syncing with Upstream PAI
 
 ```bash
-# Fetch latest from upstream
+# Weekly: Fetch upstream changes
 git fetch upstream
 
-# See what's new
+# Review what's new
 git log HEAD..upstream/main --oneline
 
-# Merge into your main
-git checkout main
+# Merge improvements
 git merge upstream/main
 
 # Push to your fork
 git push origin main
 ```
 
----
-
-## 🛠️ Installation to ~/.claude/
-
-### Option 1: Run setup.sh (Recommended)
-
-```bash
-cd /home/walub/projects/Personal_AI_Infrastructure
-./setup.sh
-```
-
-This installs:
-- Skills to `~/.claude/skills/`
-- Hooks to `~/.claude/hooks/`
-- Commands to `~/.claude/commands/`
-- Settings (symlinked from `settings.json.personal`)
-
-### Option 2: Manual Installation
-
-```bash
-# Create directory structure
-mkdir -p ~/.claude/{skills,hooks,commands,agents,history,scratchpad}
-
-# Copy/install components
-cp -r skills/* ~/.claude/skills/
-cp -r hooks/* ~/.claude/hooks/
-cp -r commands/* ~/.claude/commands/
-cp -r agents/* ~/.claude/agents/
-
-# Symlink settings
-ln -sf $(pwd)/settings.json.personal ~/.claude/settings.json
-ln -sf $(pwd)/.mcp.json.personal ~/.claude/.mcp.json
-```
-
-### Customize Personal Data
-
-After installation:
-
-```bash
-# Edit your REAL personal data (not the template!)
-nano ~/.claude/skills/PAI/SKILL.md
-
-# Replace [CUSTOMIZE] placeholders with:
-# - Your real contacts
-# - Your projects
-# - Your preferences
-# - Financial data sources (if needed)
-```
+See **BOB_UPDATE_WORKFLOW.md** for detailed sync procedures.
 
 ---
 
@@ -316,130 +441,131 @@ nano ~/.claude/skills/PAI/SKILL.md
 ### Verify Installation
 
 ```bash
-# Check directory structure
+# Check symlinks
 ls -la ~/.claude/
+# Should show symlinks to repo
 
-# Expected:
-#   skills/
-#   hooks/
-#   commands/
-#   agents/
-#   settings.json -> /path/to/settings.json.personal
-#   .mcp.json -> /path/to/.mcp.json.personal
+# Check personal files gitignored
+git status
+# Should NOT show:
+#   - .env
+#   - settings.json.personal
+#   - .mcp.json.personal
+#   - .claude/skills/*/data/
 ```
 
-### Test Claude Code Integration
+### Test Claude Code
 
 1. Open Claude Code
-2. Verify Bob loads: Check for session-start hook message
-3. Ask: "Who are you?" → Should respond as "Bob"
-4. Check skills loaded: "List available skills"
+2. Ask: "Who are you?" → Should respond as "Bob" (or your AI's name)
+3. Check skills: `/skill cognitive-loop` (if you have it)
+4. Verify custom commands work
 
-### Test API Integrations
+### Test Custom Skills
 
 ```bash
-# Test research agents (requires API keys in .env)
 # In Claude Code:
-"Do research on latest AI developments"
 
-# Should invoke:
-# - perplexity-researcher (if PERPLEXITY_API_KEY set)
-# - gemini-researcher (if GOOGLE_API_KEY set)
-# - claude-researcher (built-in, no key needed)
+# Test TaskMan (if configured)
+"What's my next task?"
+
+# Test cognitive-loop (if configured)
+"Help me write today's post"
+
+# Test Telos (if configured)
+"What are my current goals?"
 ```
 
 ---
 
-## 📚 Key Differences from Upstream PAI
+## 📖 Documentation Reference
 
-### Hooks Configuration
+### This Fork's Documentation
 
-**Bob** (Simplified):
-- SessionStart: load-core-context.ts only
-- All other hooks: disabled
+| File | Purpose |
+|------|---------|
+| **BOB_SETUP.md** | This file - overall setup guide |
+| **BOB_MANUAL_SETUP.md** | Step-by-step installation to ~/.claude/ |
+| **BOB_UPDATE_WORKFLOW.md** | Git fork workflows and syncing |
+| **CLAUDE.md** | Development guide for working on Bob repo |
 
-**Upstream PAI** (Full):
-- SessionStart: load-core-context.ts + initialize-pai-session.ts
-- PostToolUse: capture-tool-output.ts
-- SessionEnd: capture-session-summary.ts
-- UserPromptSubmit: update-tab-titles.ts
-- PreCompact: context-compression-hook.ts
+### Upstream PAI Documentation
 
-**Rationale**: Simplified for faster startup and reduced complexity during initial setup phase.
-
-### Environment
-
-**Bob**: WSL2/Linux on Windows
-**Upstream**: Primarily macOS (voice server requires macOS)
-
-**Implications**:
-- Voice server features disabled (macOS-only)
-- Path conventions: Unix-style (`/home/walub/...`)
-- Package manager: Bun for JS/TS, uv for Python
+| File | Purpose |
+|------|---------|
+| **README.md** | PAI project overview |
+| **skills/create-skill/** | Skill creation framework |
+| **skills/prompting/** | Prompt engineering guide |
 
 ---
 
-## 🔐 Security Best Practices
+## 🆘 Troubleshooting
 
-### Pre-Commit Checks
+### "Bob doesn't load / wrong identity"
 
-**ALWAYS before committing**:
-
+**Check**:
 ```bash
-# 1. Verify repository
-git remote -v
+# 1. Settings symlink
+readlink -f ~/.claude/settings.json
+# Should point to: /path/to/repo/settings.json.personal
 
-# 2. Check staged files
+# 2. Personal settings content
+cat ~/.claude/settings.json | jq '.env.PAI_DIR'
+# Should show your repo .claude directory
+
+# 3. CORE skill personal data
+cat .claude/skills/CORE/data/SKILL.md.personal | head -20
+# Should have YOUR data, not [CUSTOMIZE]
+```
+
+### "Git wants to commit personal data"
+
+**Fix**:
+```bash
+# Check what's staged
 git status
 
-# 3. Review changes
-git diff --cached
+# If personal files appear:
+git reset HEAD .env
+git reset HEAD settings.json.personal
+git reset HEAD .claude/skills/*/data/
 
-# 4. Scan for secrets
-git diff --cached | grep -iE "(api_key|token|password|secret)"
-
-# 5. Verify gitignore working
-git status | grep -E "(\.env|\.personal|MY_)"
-# Should see these files as untracked, NOT staged
+# Verify gitignore
+cat .gitignore | grep -A 3 "Custom skill data"
+# Should show: .claude/skills/*/data/
 ```
 
-### API Key Management
+### "Merge conflicts with upstream"
 
-- ✅ Store in `.env` file (gitignored)
-- ✅ Use environment variables in code
-- ✅ Never hardcode in scripts or config
-- ✅ Rotate keys regularly
-- ✅ Use minimum permissions for each key
+Usually in CORE/SKILL.md where upstream updated the template.
 
-### Personal Data Protection
+**Strategy**:
+1. Keep CORE/SKILL.md as template (from upstream)
+2. Your personal data is safe in CORE/data/SKILL.md.personal (gitignored)
+3. Accept upstream's template changes
 
-- ✅ Real contacts only in `~/.claude/skills/PAI/SKILL.md`
-- ✅ Financial data in encrypted vault or outside git
-- ✅ Session history in `~/.claude/history/` (private)
-- ✅ Test files in `~/.claude/scratchpad/` (temporary)
+```bash
+# During merge conflict:
+git checkout --theirs .claude/skills/CORE/SKILL.md
+git add .claude/skills/CORE/SKILL.md
+git commit
+```
 
----
+### "Accidentally committed secrets"
 
-## 📖 Documentation Files
+**Immediate action**:
+```bash
+# 1. ROTATE THE SECRET IMMEDIATELY (API provider website)
 
-### Repository Files (Git-Tracked)
+# 2. Remove from history (if only in your fork):
+git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch .env" \
+  --prune-empty --tag-name-filter cat -- --all
 
-- **README.md**: Project overview and quickstart
-- **CLAUDE.md**: Development guide for working on Bob
-- **BOB_SETUP.md**: This comprehensive setup guide
-- **CONTRIBUTING_WORKFLOW.md**: Git fork workflows
-- **SECURITY.md**: Security guidelines
+git push origin --force --all
 
-### Personal Files (Gitignored)
-
-- **MY_CUSTOMIZATIONS.md**: Your personal setup notes
-- **settings.json.personal**: Your Claude Code settings
-- **.mcp.json.personal**: Your MCP server configs
-
-### Runtime Files (Outside Repo)
-
-- **~/.claude/CLAUDE.md**: Bob's runtime instructions (global)
-- **~/.claude/skills/PAI/SKILL.md**: Your real personal data
+# 3. Review and fix .gitignore
+```
 
 ---
 
@@ -447,100 +573,39 @@ git status | grep -E "(\.env|\.personal|MY_)"
 
 After completing setup:
 
-1. **Review Documentation**:
-   - Read CONTRIBUTING_WORKFLOW.md for git workflows
-   - Review CLAUDE.md for development guidance
+1. **Customize Personal Data**:
+   - Edit `.claude/skills/CORE/data/SKILL.md.personal`
+   - Replace all [CUSTOMIZE] placeholders
+   - Add your real contacts, preferences
 
-2. **Customize Personal Data**:
-   - Edit `~/.claude/skills/PAI/SKILL.md` with real contacts
-   - Add project information
-   - Configure financial data sources (if needed)
+2. **Create Your First Custom Skill**:
+   - Use `skills/create-skill/` as template
+   - Document YOUR workflow
+   - Keep framework code public, data private
 
-3. **Test Functionality**:
-   - Verify Bob loads correctly
-   - Test research agents with API keys
-   - Try creating a test skill
+3. **Test Thoroughly**:
+   - Verify Bob loads with your identity
+   - Test custom skills work
+   - Ensure gitignore protects personal data
 
-4. **Integrate with Workflow**:
-   - Connect to publishing loop system
-   - Set up MCP servers for your needs
-   - Create custom commands for your workflow
-
-5. **Contribute Back**:
-   - Document learnings
-   - Create useful skills or improvements
+4. **Contribute Back** (Optional):
+   - Document WSL2 learnings
+   - Create generally useful skills
    - Submit PRs to upstream PAI
-
----
-
-## 🆘 Troubleshooting
-
-### "Bob doesn't load / behaves like default PAI"
-
-**Check**:
-- Is `~/.claude/CLAUDE.md` created with Bob instructions?
-- Is `~/.claude/settings.json` symlinked to `settings.json.personal`?
-- Does `settings.json.personal` have `DA: "Bob"`?
-
-### "API keys not working"
-
-**Check**:
-- Are keys in `.env` file?
-- Correct format: `PERPLEXITY_API_KEY=pk-xxx-your-key`
-- No quotes around values
-- No spaces around `=`
-- Keys actually valid (test on provider website)
-
-### "Git push rejected"
-
-**Check**:
-```bash
-git remote -v
-# Ensure pushing to origin (your fork), not upstream
-git push origin main  # Explicit remote
-```
-
-### "Accidentally committed secrets"
-
-**Immediately**:
-```bash
-# If not pushed yet:
-git reset HEAD~1
-git add .  # Re-add without secrets
-git commit -m "your message"
-
-# If already pushed to YOUR fork (not upstream):
-# 1. Rotate the exposed keys IMMEDIATELY
-# 2. Remove from git history (careful!):
-git filter-branch --force --index-filter \
-  "git rm --cached --ignore-unmatch .env" \
-  --prune-empty --tag-name-filter cat -- --all
-git push origin --force --all
-```
 
 ---
 
 ## 📞 Resources
 
 - **Upstream PAI**: https://github.com/danielmiessler/Personal_AI_Infrastructure
-- **Your Fork**: https://github.com/wally-kroeker/Bob
+- **Wally's Bob Fork**: https://github.com/wally-kroeker/Bob
+- **wallykroeker.com**: https://wallykroeker.com/blog/building-bob-personal-ai-infrastructure-on-wsl
 - **Claude Code**: https://claude.ai/code
 - **Bun Runtime**: https://bun.sh
 - **WSL2 Docs**: https://learn.microsoft.com/en-us/windows/wsl/
 
 ---
 
-## 📝 Change Log
-
-**2025-10-21**: Initial Bob setup and documentation
-- Forked from upstream PAI
-- Configured for WSL2 environment
-- Simplified hooks configuration
-- Created comprehensive documentation
-- Integrated with publishing loop system
-
----
-
 **Maintained by**: Wally Kroeker
 **License**: MIT (inherited from upstream PAI)
-**Last Updated**: 2025-10-21
+**Last Updated**: 2025-11-08
