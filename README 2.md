@@ -10,8 +10,6 @@
 
 ### **Open-source personal AI infrastructure for orchestrating your life and work**
 
-> **🤖 Bob Fork**: This is a personal fork of PAI customized for Wally's WSL2 environment. See [BOB_SETUP.md](./BOB_SETUP.md) for fork-specific setup. Upstream: [danielmiessler/Personal_AI_Infrastructure](https://github.com/danielmiessler/Personal_AI_Infrastructure)
-
 <br/>
 
 ![Static Badge](https://img.shields.io/badge/mission-upgrade_humans_using_AI-8B5CF6)
@@ -21,7 +19,7 @@
 [![PAI Video](https://img.shields.io/badge/🎥_Watch-PAI_Video-6B46C1)](https://youtu.be/iKwRWwabkEc)
 
 
-**[Features](#-key-features)** • **[Quick Start](#-quick-start)** • **[Documentation](#-documentation)** • **[Examples](#-examples)** • **[Community](#-community)**
+**[Features](#-key-features)** • **[Observability](#-observability--hooks-system)** • **[Quick Start](#-quick-start)** • **[Documentation](#-documentation)** • **[Examples](#-examples)** • **[Community](#-community)**
 
 </div>
 
@@ -30,13 +28,15 @@
 ## 🚀 **Recent Updates**
 
 > [!IMPORTANT]
-> **🔥 v0.6.0 MAJOR UPGRADE:** Repository completely restructured with `.claude/` directory!
+> **🔥 v0.7.0 OBSERVABILITY SYSTEM:** Real-time agent monitoring dashboard and complete hooks infrastructure!
 >
-> **BREAKING CHANGE - Repository Structure Changed:**
-> - All PAI infrastructure now lives in `.claude/` directory
-> - Repository now properly mirrors your actual `~/.claude/` working system
-> - Fixes major compatibility issues reported by users
-> - **Action Required:** New installations should copy `.claude/` to `~/.claude/`
+> **NEW FEATURES:**
+> - 🔍 Real-time Agent Observability Dashboard with visual monitoring
+> - 📡 Complete Hooks System capturing all Claude Code events
+> - 🎯 7 Event Types: SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Stop, SubagentStop, SessionEnd, PreCompact
+> - 📊 Multi-agent color-coded visualization
+> - 💾 Historical event logging with JSONL format
+> - 🚀 One-command dashboard startup
 >
 > [See full changelog below →](#-recent-updates)
 
@@ -45,7 +45,9 @@
 
 ### Recent Manual Updates
 
-- **✨ Oct 31:** v1.2.0 - Skills-as-Containers Migration - Complete architectural upgrade
+- **✨ Oct 26:** Agent Observability Dashboard - Real-time monitoring with WebSocket streaming
+- **✨ Oct 26:** Complete Hooks System - All 7 event types captured (Session, Tool, Agent, Context)
+- **✨ Oct 26:** Event capture utilities with observability integration
 - **✨ Oct 19:** Session-start hook now loads PAI skill - improved Skills system bootstrap
 - **✨ Oct 18:** Major repo cleanup - fixed missing files, hooks, settings
 - **✨ v0.5.0:** Skills-based architecture with 92.5% token reduction
@@ -81,67 +83,117 @@
 ### Version History
 
 <details>
-<summary><strong>📅 v1.2.0 - Skills-as-Containers Migration 🔥 ARCHITECTURAL UPGRADE</strong></summary>
+<summary><strong>📅 v0.7.0 - Agent Observability System & Complete Hooks Infrastructure 🔥 MAJOR UPDATE</strong></summary>
 
 **The Problem:**
-Commands were scattered in a flat global namespace (`~/.claude/commands/`), making it hard to discover related functionality, maintain consistency, and understand domain boundaries. The architecture needed hierarchical organization that matched how capabilities are naturally grouped.
+Understanding what Claude Code and its agents are doing in real-time is critical for debugging, optimization, and learning. Without visibility into agent behavior, tool usage, and session flow, it's difficult to improve prompts, debug issues, or understand system performance.
 
 **The Solution:**
-Complete migration to Skills-as-Containers pattern:
-- Moved 73 commands into skill-specific `workflows/` subdirectories
-- Enhanced 21 skills with proper workflow organization
-- Established deprecation pattern for future architectural upgrades
-- Documented the complete migration process
+Complete observability infrastructure with real-time monitoring dashboard and comprehensive event capture system:
+
+**🔍 Agent Observability Dashboard:**
+- Real-time WebSocket streaming of all Claude Code events
+- Visual monitoring with color-coded agent identification
+- Multi-agent session tracking (Kai, Engineer, Architect, Designer, etc.)
+- Event timeline with tool usage, sessions, and agent lifecycle
+- Server/Client architecture (localhost:4000 / localhost:5172)
+- Smart grid layout with responsive design
+- Historical event replay and analysis
+
+**📡 Complete Hooks System:**
+All 7 Claude Code hook events captured and processed:
+
+1. **SessionStart** - Initialize PAI session, load core context
+2. **UserPromptSubmit** - Update tab titles, capture user input
+3. **PreToolUse** - Log tool calls before execution
+4. **PostToolUse** - Capture tool outputs and results
+5. **Stop** - Handle user stops and cleanup
+6. **SubagentStop** - Track subagent lifecycle and completion
+7. **SessionEnd** - Capture session summaries and learnings
+8. **PreCompact** - Context compression events
+
+**🎯 Hook Infrastructure:**
+```
+~/.claude/hooks/
+├── capture-all-events.ts          # Universal event capture (JSONL)
+├── initialize-pai-session.ts      # Session initialization
+├── update-tab-titles.ts           # Dynamic tab management
+├── load-core-context.ts           # Context loading
+├── stop-hook.ts                   # Stop event handler
+├── subagent-stop-hook.ts          # Subagent lifecycle
+├── capture-session-summary.ts     # Session summaries
+├── context-compression-hook.ts    # Context management
+└── lib/
+    └── observability.ts           # Observability integration
+```
+
+**💾 Event Logging:**
+- Automatic daily JSONL files: `~/.claude/history/raw-outputs/YYYY-MM/YYYY-MM-DD_all-events.jsonl`
+- Session-to-agent mapping: `~/.claude/agent-sessions.json`
+- Agent detection: automatic identification via tool calls, env vars, and path analysis
+- PST timestamps with millisecond precision
+- Fail-safe: hooks never block Claude Code execution
+
+**🚀 Quick Start:**
+```bash
+# Start the observability dashboard
+~/.claude/scripts/start-observability.sh
+
+# Access dashboard
+open http://localhost:5172
+
+# Restart dashboard
+~/.claude/scripts/restart-observability.sh
+
+# Stop dashboard
+~/.claude/scripts/stop-observability.sh
+```
+
+**🎨 Agent Color Mapping:**
+- Kai (main) → Purple
+- Engineer → Green
+- Architect → Blue
+- Designer → Pink
+- Researcher → Yellow
+- QA Tester → Orange
+- And more...
+
+**Architecture:**
+```
+Claude Code Events → Hooks (TypeScript) → JSONL Logs
+                                       ↓
+                              Observability Server (Bun)
+                                       ↓
+                              WebSocket Stream
+                                       ↓
+                              React Dashboard (Vite)
+```
 
 **What Changed:**
-```
-Before (v0.6.0):
-~/.claude/
-├── commands/
-│   ├── write-blog.md
-│   ├── publish-blog.md
-│   ├── quick-research.md
-│   ├── extensive-research.md
-│   └── [75+ scattered commands]
-└── skills/
-    ├── blogging/SKILL.md
-    └── research/SKILL.md
+- Added `agent-observability/` system with server/client architecture
+- Created 8 TypeScript hooks for all Claude Code events
+- Integrated observability library for real-time streaming
+- Added 3 management scripts: start, stop, restart
+- Configured all hooks in `settings.json` with proper event types
+- Added `.env.example` with MCP_API_KEY documentation
+- Created session-to-agent mapping system
 
-After (v1.2.0):
-~/.claude/
-├── commands/               # Empty (commands moved to skills)
-└── skills/
-    ├── blogging/
-    │   ├── SKILL.md
-    │   └── workflows/
-    │       ├── write.md
-    │       └── publish.md
-    └── research/
-        ├── SKILL.md
-        └── workflows/
-            ├── quick.md
-            └── extensive.md
-```
+**Why This Matters:**
+1. **Debugging:** See exactly what tools agents are using and when
+2. **Learning:** Understand how Claude Code processes your requests
+3. **Optimization:** Identify bottlenecks and improve prompts
+4. **Multi-Agent Visibility:** Track complex agent interactions
+5. **Historical Analysis:** Review past sessions to improve workflows
+6. **Real-Time Feedback:** Instant visibility into agent behavior
 
-**Architecture Benefits:**
-- ✅ Domain knowledge colocated with workflows
-- ✅ Clear ownership and responsibility
-- ✅ Natural language routing: Skills → Workflows
-- ✅ Easier discovery of related capabilities
-- ✅ Better encapsulation of domain context
-
-**Migration Stats:**
-- 73 commands migrated to skill workflows
-- 21 skills enhanced with workflows/ directories
-- 1 new skill created (content-enhancement)
-- Commands directory reduced from 75 files to 0
-- Zero errors, 100% QA pass rate
-- Complete in ~25 minutes using parallel agents
-
-**Documentation:**
-- See `docs/ARCHITECTURE.md` for Skills-as-Containers pattern
-- Deprecation pattern established in `history/upgrades/deprecated/`
-- Complete migration audit trail preserved
+**Benefits:**
+- Complete transparency into Claude Code operations
+- Real-time visual feedback during development
+- Historical event logs for post-session analysis
+- Multi-agent session tracking and visualization
+- Fail-safe design - never blocks Claude Code execution
+- One-command dashboard startup
+- Automatic daily log rotation
 
 </details>
 
@@ -334,83 +386,6 @@ Public release with voice server, PAI_HOME support, comprehensive documentation,
 
 ---
 
-## 🏗️ **Architecture**
-
-**Want to understand how PAI really works?**
-
-PAI is built on four core primitives that work together: **Skills**, **Commands**, **Agents**, and **MCPs**. Understanding this architecture is essential for customizing PAI or building your own AI infrastructure.
-
-### The Four Primitives
-
-- **💡 Skills:** Meta-containers for domain expertise (e.g., Content Creation, Research, Development)
-  - Package workflows, knowledge, and procedural guidance
-  - Use progressive disclosure (metadata → instructions → resources) to prevent context bloat
-  - Auto-load based on natural language triggers
-
-- **⚡ Workflows:** Discrete task workflows within Skills (in `workflows/` subdirectory)
-  - Self-contained, step-by-step workflows
-  - Like "exported functions" from a Skill module
-  - Auto-selected by natural language or invoked explicitly
-
-- **🤖 Agents:** Orchestration workers for parallelization
-  - Primarily invoke Skills/Commands (not standalone knowledge bases)
-  - Enable parallel execution of independent tasks
-  - Best for background work where results are logged
-
-- **🔌 MCPs vs Direct Code:** Implementation flexibility
-  - Use MCPs for standardized platform services (Chrome, Apify, etc.)
-  - Use direct API code for domain-specific integrations
-  - Choose based on your infrastructure scale and needs
-
-### How They Fit Together
-
-```
-User Intent → Natural Language Trigger
-    ↓
-SKILL (Container for Domain)
-    ↓
-WORKFLOW (Specific Task - in workflows/ subdirectory)
-    ↓
-Implementation (Direct Code or MCPs)
-    ↑
-Invoked by AGENTS (for parallelization)
-```
-
-### Real-World Example
-
-```
-User: "Do extensive research on AI agent planning"
-  ↓
-Research Skill (domain expertise) loads
-  ↓
-workflows/extensive-research.md (workflow file) selected
-  ↓
-Launches 24 parallel researcher agents
-  ↓
-Each agent uses research strategies from Skill
-  ↓
-Results consolidated and saved
-```
-
-### Why This Matters
-
-PAI's architecture **perfectly aligns** with Anthropic's official Skills framework while extending it with production-tested patterns:
-- ✅ Progressive disclosure prevents context bloat
-- ✅ Natural language routing (no command memorization)
-- ✅ Parallel agent execution for speed
-- ✅ Modular and composable design
-
-📖 **[Read the full architecture documentation](./docs/ARCHITECTURE.md)** to understand:
-- When to use each primitive
-- Design patterns from production use
-- Comparison with Anthropic's framework
-- Decision trees for architectural choices
-- Best practices and anti-patterns
-
-This architecture scales from simple single-task workflows to complex multi-agent systems while maintaining clarity and efficiency.
-
----
-
 ## 🎯 **What is PAI?**
 
 > **Core Mission:** Augment humans with AI capabilities so they can survive and thrive in a world full of AI.
@@ -548,6 +523,8 @@ PAI is part of the journey toward Human 3.0—where humans are augmented by AI t
 - **🎯 Task Agnostic**: From writing a blog to tracking medical data to running a business
 - **📁 Plain Text**: All configuration in human-readable files you can edit and understand
 - **🔌 Extensible**: Add your own commands, agents, and integrations
+- **🔍 Observable**: Real-time monitoring dashboard shows exactly what your AI is doing
+- **🪝 Event-Driven**: Complete hooks system captures every action for learning and debugging
 
 📖 **[Read the full technical deep-dive on PAI](https://danielmiessler.com/blog/personal-ai-infrastructure)**
 
@@ -595,28 +572,13 @@ graph TD
 <td width="50%">
 
 ```
-<<<<<<< HEAD
-${PAI_DIR}/skills/
+~/.claude/skills/
 ├── prompting/           # Prompt engineering standards
 ├── create-skill/        # Skill creation framework
 ├── ffuf/                # Web fuzzing for pentesting (by @rez0)
 ├── alex-hormozi-pitch/  # $100M Offers pitch framework
 ├── research/            # Multi-source research (requires API keys)
 ├── fabric/              # Intelligent Fabric pattern selection (242+ patterns)
-├── vikunja/             # Task management integration (Vikunja API)
-=======
-~/.claude/skills/
-├── prompting/
-│   └── workflows/       # create-prompt, optimize-prompt
-├── create-skill/
-│   └── workflows/       # create-new, update-existing
-├── ffuf/
-│   └── workflows/       # directory-scan, parameter-fuzz
-├── research/
-│   └── workflows/       # quick, standard, extensive
-├── fabric/
-│   └── workflows/       # select-pattern (242+ patterns)
->>>>>>> upstream/main
 ├── web-scraping/        # Web data extraction
 ├── chrome-devtools/     # Browser automation
 ├── youtube-extraction/  # YouTube transcript extraction
@@ -630,9 +592,9 @@ ${PAI_DIR}/skills/
 
 **Features:**
 - ✅ Modular capability packages
-- 📄 Progressive disclosure (metadata → workflows/ → assets/)
+- 📄 Progressive disclosure (SKILL.md → CLAUDE.md)
 - ⚡ Intent-based activation
-- 📂 Self-contained with workflows and templates
+- 📂 Self-contained with templates
 - 🔌 Inherits global context
 
 </td>
@@ -654,10 +616,10 @@ ${PAI_DIR}/skills/
 
 **Each skill contains:**
 - 📄 Intent triggers ("USE WHEN...")
-- 📁 Workflows subdirectory (specific tasks)
 - 🤖 Specialized agents (if needed)
 - 🔌 MCP integrations (if needed)
-- 📖 Assets and examples
+- ⚡ Commands and tools (if needed)
+- 📖 Documentation and examples
 
 > [!TIP]
 > **You don't manage agents or commands directly.** Just tell PAI what you want to do, and the right skill activates with all necessary resources.
@@ -672,7 +634,6 @@ ${PAI_DIR}/skills/
 | **🎨 design** | UX/UI design with shadcn/ui and Figma integration | "Design a dashboard for analytics" |
 | **🔒 ffuf** | Web fuzzing for penetration testing | "Test this API for vulnerabilities" |
 | **📊 alex-hormozi-pitch** | Create irresistible offers using $100M Offers framework | "Create a pitch for my SaaS product" |
-| **✅ vikunja** | Task management and todo tracking | "What tasks do I have today?" |
 | **🌐 web-scraping** | Extract data from websites (BrightData + Apify) | "Scrape product listings from this site" |
 | **📖 ref-documentation** | Search technical docs (React, Next.js, 100+ frameworks) | "How do I use React hooks?" |
 | **▶️ youtube-extraction** | Extract transcripts and content from YouTube videos | "Summarize this YouTube video" |
@@ -680,6 +641,217 @@ ${PAI_DIR}/skills/
 
 **Skills use MCP servers for integrations:**
 Chrome DevTools • Apify • BrightData • Stripe • Anthropic Content • Daemon (your data) • And more...
+
+---
+
+## 🔍 **Observability & Hooks System**
+
+### **Real-Time Agent Monitoring**
+
+PAI includes a complete observability system that gives you real-time visibility into everything Claude Code is doing. Watch agents work, see tool usage, track sessions, and analyze performance—all from a beautiful web dashboard.
+
+<div align="center">
+
+```mermaid
+graph LR
+    CC[Claude Code] --> Hooks[Hook Events]
+
+    Hooks --> SE[SessionStart]
+    Hooks --> UP[UserPrompt]
+    Hooks --> PT[PreTool]
+    Hooks --> POST[PostTool]
+    Hooks --> ST[Stop]
+    Hooks --> SS[SubagentStop]
+    Hooks --> END[SessionEnd]
+    Hooks --> PC[PreCompact]
+
+    SE --> Log[JSONL Logs]
+    UP --> Log
+    PT --> Log
+    POST --> Log
+    ST --> Log
+    SS --> Log
+    END --> Log
+    PC --> Log
+
+    Log --> Server[Observability Server]
+    Server --> WS[WebSocket Stream]
+    WS --> Dashboard[React Dashboard]
+
+    style CC fill:#1a1b26,stroke:#bb9af7,stroke-width:3px,color:#c0caf5
+    style Dashboard fill:#1a1b26,stroke:#7aa2f7,stroke-width:3px,color:#c0caf5
+    style Server fill:#24283b,stroke:#9ece6a,stroke-width:2px,color:#c0caf5
+```
+
+</div>
+
+### **🎯 Hook Events Captured**
+
+PAI hooks into every Claude Code event to provide complete visibility:
+
+| Event | Description | Use Case |
+|:------|:------------|:---------|
+| **SessionStart** | New Claude Code session begins | Initialize context, set up environment |
+| **UserPromptSubmit** | User sends a message | Track requests, update UI |
+| **PreToolUse** | Before a tool is executed | Log tool calls, validate inputs |
+| **PostToolUse** | After a tool completes | Capture outputs, measure performance |
+| **Stop** | User stops execution | Cleanup, save state |
+| **SubagentStop** | Subagent completes | Track agent lifecycle, capture results |
+| **SessionEnd** | Session terminates | Save summaries, analyze session |
+| **PreCompact** | Context compression starts | Monitor token usage, optimize context |
+
+### **🚀 Quick Start: Observability Dashboard**
+
+**Start the dashboard:**
+```bash
+# One command to start everything
+~/.claude/scripts/start-observability.sh
+
+# Dashboard will be available at:
+# - Client: http://localhost:5172
+# - Server API: http://localhost:4000
+```
+
+**What you'll see:**
+- 🎨 Color-coded agent identification (Kai, Engineer, Architect, Designer, etc.)
+- 📊 Real-time event stream with tool usage
+- 🔄 Session lifecycle tracking
+- 📈 Performance metrics and timing
+- 🎯 Tool usage patterns and frequency
+- 🧪 Multi-agent conversation flows
+
+**Management commands:**
+```bash
+# Restart the dashboard
+~/.claude/scripts/restart-observability.sh
+
+# Stop the dashboard
+~/.claude/scripts/stop-observability.sh
+```
+
+### **📁 Hook Infrastructure**
+
+All hooks are TypeScript-based and located in `~/.claude/hooks/`:
+
+<table>
+<tr>
+<td width="50%">
+
+**Core Hooks:**
+```
+capture-all-events.ts      # Universal event capture
+initialize-pai-session.ts   # Session bootstrap
+update-tab-titles.ts        # Dynamic tab management
+load-core-context.ts        # Context loading
+```
+
+</td>
+<td width="50%">
+
+**Lifecycle Hooks:**
+```
+stop-hook.ts                # Stop event handler
+subagent-stop-hook.ts       # Subagent lifecycle
+capture-session-summary.ts  # Session summaries
+context-compression-hook.ts # Context management
+```
+
+</td>
+</tr>
+</table>
+
+**Observability Integration:**
+```typescript
+// hooks/lib/observability.ts
+// Sends events to dashboard via WebSocket
+// Fails silently if dashboard is offline
+// Never blocks Claude Code execution
+```
+
+### **💾 Event Logging**
+
+Every event is logged to structured JSONL files for historical analysis:
+
+**Log Location:**
+```
+~/.claude/history/raw-outputs/
+├── 2025-10/
+│   ├── 2025-10-26_all-events.jsonl
+│   ├── 2025-10-27_all-events.jsonl
+│   └── 2025-10-28_all-events.jsonl
+└── agent-sessions.json  # Session-to-agent mapping
+```
+
+**Event Format:**
+```json
+{
+  "source_app": "engineer",
+  "session_id": "abc-123",
+  "hook_event_type": "PostToolUse",
+  "payload": { /* full event data */ },
+  "timestamp": 1698765432000,
+  "timestamp_pst": "2025-10-26 14:30:32 PST"
+}
+```
+
+### **🎨 Agent Detection & Color Mapping**
+
+PAI automatically detects which agent is running and assigns colors:
+
+| Agent | Color | Detection Method |
+|:------|:------|:-----------------|
+| Kai (main) | Purple | Default session |
+| Engineer | Green | Task tool + subagent_type |
+| Architect | Blue | Task tool + subagent_type |
+| Designer | Pink | Task tool + subagent_type |
+| Researcher | Yellow | Task tool + subagent_type |
+| QA Tester | Orange | Task tool + subagent_type |
+
+**Detection Priority:**
+1. Task tool `subagent_type` parameter
+2. `CLAUDE_CODE_AGENT` environment variable
+3. Agent type in payload
+4. Path analysis (`/agents/designer/`)
+5. Session mapping from previous events
+
+### **🔧 Configuration**
+
+Hooks are configured in `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "${PAI_DIR}/hooks/load-core-context.ts" },
+          { "type": "command", "command": "${PAI_DIR}/hooks/initialize-pai-session.ts" },
+          { "type": "command", "command": "${PAI_DIR}/hooks/capture-all-events.ts --event-type SessionStart" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          { "type": "command", "command": "${PAI_DIR}/hooks/capture-all-events.ts --event-type PreToolUse" }
+        ]
+      }
+    ]
+    // ... 6 more event types
+  }
+}
+```
+
+### **✨ Benefits**
+
+- **🐛 Debugging:** See exactly what's happening in real-time
+- **📚 Learning:** Understand how Claude Code processes requests
+- **⚡ Optimization:** Identify bottlenecks and improve workflows
+- **🤖 Multi-Agent:** Track complex agent interactions visually
+- **📊 Analytics:** Historical analysis of all sessions
+- **🛡️ Fail-Safe:** Never blocks Claude Code execution
+- **🎯 Insights:** Discover patterns in tool usage and agent behavior
 
 ---
 
@@ -795,6 +967,10 @@ cd ~/.claude/voice-server && bun server.ts &
 PAI_DIR="/path/to/PAI"                  # PAI repository root (system agnostic)
 PAI_HOME="$HOME"                        # Your home directory
 
+# ============ OBSERVABILITY & HOOKS ============
+MCP_API_KEY="your_generated_key"        # For observability dashboard and MCP servers
+                                         # Generate with: openssl rand -hex 32
+
 # ============ RESEARCH AGENTS (Skills-Specific) ============
 PERPLEXITY_API_KEY="your_key"          # For perplexity-researcher agent
 GOOGLE_API_KEY="your_key"              # For gemini-researcher agent
@@ -824,10 +1000,11 @@ DA_COLOR="purple"                       # Display color (purple, blue, green, cy
 | 📖 Guide | 🎯 Purpose | ⏱️ Time |
 |----------|------------|---------|
 | [Quick Start](#-quick-start) | Get up and running | 5 min |
-| [Architecture](./docs/ARCHITECTURE.md) | Understand the system | 15 min |
-| [Migration Guide](./docs/MIGRATION.md) | Upgrade to v1.2.0 | 10 min |
+| [Architecture](#-architecture) | Understand the system | 10 min |
+| [Observability & Hooks](#-observability--hooks-system) | Real-time monitoring dashboard | 10 min |
 | [SECURITY.md](./SECURITY.md) | Security guidelines | 5 min |
 | [Voice Server](./.claude/voice-server/README.md) | Enable voice interaction | 10 min |
+| [Commands Directory](./.claude/commands/) | Browse all commands | 15 min |
 
 </div>
 
