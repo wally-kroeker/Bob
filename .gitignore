@@ -73,3 +73,6 @@ MY_CUSTOMIZATIONS.md                                                            
 
 # WSL-specific                                                                                                                                                                                │ │
 .wslconfig                           
+
+# Custom skill data (preserve locally, don't commit to public repo)
+.claude/skills/*/data/
