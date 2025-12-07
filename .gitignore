@@ -74,6 +74,7 @@ MY_*.md
 .claude/skills/telos/data/
 .claude/skills/financial-system/data/
 .claude/skills/taskman/data/*.db
+.claude/skills/taskman/data/*.db.backup-*
 
 # Archives and backups
 .taskman-archive/
