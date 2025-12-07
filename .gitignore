@@ -61,3 +61,33 @@ out/
 private/
 secrets/
 credentials/
+
+# Personal configuration files
+*.personal
+.mcp.json.personal
+MY_*.md
+
+# Sensitive skill data
+.claude/skills/*/data/*.md
+.claude/skills/*/data/.env
+.claude/skills/*/data/**/*.md
+.claude/skills/telos/data/
+.claude/skills/financial-system/data/
+.claude/skills/taskman/data/*.db
+
+# Archives and backups
+.taskman-archive/
+*-backup-*/
+*.backup
+
+# Session data
+.claude/agent-sessions.json
+.claude/history/raw-outputs/
+.claude/scratchpad/
+
+# WSL metadata
+*.Zone.Identifier
+
+# Development
+.dashboard.pids
+bun.lock

@@ -1,0 +1,14 @@
+# SQLite cache files (contains personal task data)
+taskman.db
+taskman.db.tmp
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Sync logs
+sync.log
+*.log
+
+# Backup files
+*.backup
+*.bak
