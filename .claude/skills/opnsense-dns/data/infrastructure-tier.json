@@ -1,0 +1,50 @@
+[
+  {
+    "hostname": "opnsense",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.10.1",
+    "description": "Firewall/Gateway/DNS on VLAN 10"
+  },
+  {
+    "hostname": "opnsense-mgmt",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.40.1",
+    "description": "Firewall/Gateway/DNS on VLAN 40"
+  },
+  {
+    "hostname": "switch",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.10.5",
+    "description": "Cisco Switch VLAN 10 SVI"
+  },
+  {
+    "hostname": "switch-mgmt",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.40.5",
+    "description": "Cisco Switch VLAN 40 SVI"
+  },
+  {
+    "hostname": "host1",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.10.10",
+    "description": "Proxmox Host One - VLAN 10"
+  },
+  {
+    "hostname": "host1-mgmt",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.40.10",
+    "description": "Proxmox Host One - VLAN 40"
+  },
+  {
+    "hostname": "host2",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.10.12",
+    "description": "Proxmox Host Two - VLAN 10"
+  },
+  {
+    "hostname": "host2-mgmt",
+    "domain": "infra.fablab.local",
+    "ip": "10.10.40.12",
+    "description": "Proxmox Host Two - VLAN 40"
+  }
+]

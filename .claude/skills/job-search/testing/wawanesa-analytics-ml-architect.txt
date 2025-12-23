@@ -1,0 +1,68 @@
+About the job
+
+Job ID: 9469
+
+Working Business Language: This role is considered a head-office role and will be required to communicate with internal stakeholders across Canada where the primary business language utilized is English.
+
+Salary: At Wawanesa, salary is only one component of a holistic, comprehensive and competitive offering that we provide to our employees. In addition to salary, full-time and part-time permanent employees are eligible for an annual bonus plan, leave of absence top-up programs and provided with generous vacation time, personal days, premium free benefits and pension plan.
+
+The salary offered for this role is determined with consideration to various factors, including but not limited to: your work location, local labour market conditions, external market salary data, internal pay equity and the knowledge, skills, experience and anticipated proficiency in the role. The salary offered is estimated to be within the following range: $115,000 - $157,000. Candidates with salary expectations outside of the range are still encouraged to apply.
+
+About Us
+
+At Wawanesa, we're proud to offer a hybrid work environment that offers flexibility to our employees in balancing in-office (2 days per week OR 15 hours per week in a Wawanesa office) and remote work. You may work from any of the following locations: Winnipeg, MB; Calgary, AB.
+
+The Wawanesa Mutual Insurance Company ("Wawanesa Mutual"), founded in 1896, is one of Canada's largest mutual insurers, with over $3.5 billion in annual revenue and assets of $10 billion (CAD). Wawanesa Mutual, with its National Headquarters in Winnipeg, is the parent company of Wawanesa Life, which provides life insurance products and services throughout Canada, and Western Financial Group, which distributes personal and business insurance across Canada. Wawanesa proudly serves more than 1.7 million members in Canada, and we are home to more than 3,600 employees distributed across the Canadian regions and communities where we operate. We give back to organizations that strengthen communities, donating more than $3.5 million annually to charitable organizations, including over $2 million annually in support of people on the front lines of climate change. To learn more visit wawanesa.com.
+
+We are currently looking for dedicated, driven, and enthusiastic individuals who thrive in an environment that welcomes change and are looking for an opportunity for diverse experience and advancement on a growing team.
+
+Job Overview
+
+Under moderate supervision, this role either as an Architect II or Senior Architect, will contribute to Wawanesa's success by providing high-level architecture design of Advanced Analytics and ML solutions and long-term technology roadmaps to meet business objectives, taking into account the existing architectural landscape including established standards and principles. In addition, this role leads architecture for cloud-native data solutions in a hub-and-spoke operating model. The Architect drives standards, governance, and reusable patterns to enable spoke teams while ensuring solutions are implemented in alignment with solution architecture design.
+
+Job Responsibilities
+
+    Develop and maintain current state architecture models and artifacts including the four key domains of architecture: Business, Application, Data, and Technology.
+    Design and optimize AWS-native data and ML platforms, including data lakes, MLOps pipelines, automation, and CI/CD.
+    Define and maintain hub standards, guardrails, and governance for analytics and ML platforms.
+    Support spoke teams with onboarding, architecture reviews, and reusable templates.
+    Enable Responsible AI practices (explainability, fairness, compliance) and regulatory compliance for data and AI solutions (privacy, security, auditability).
+    Partner with business and technical teams to embed analytics services into products and workflows.
+    Gather solution architecture requirements from various sources including interviewing business and IT stakeholders, established architecture standards and principles, and reference architecture.
+    Provide architectural leadership and guidance throughout solution design and implementation, ensuring best practices, reuse of components, and alignment with target architecture.
+    Ensure architectural compliance of solutions to enterprise architecture standards and principles.
+    Participate and provide architectural guidance in the construction, modeling, and design of prototypes, proofs of concepts and working models of complex or new design elements.
+    Design external system interface architecture, including appropriate application of techniques and standards such as service-oriented architecture, web services, etc.
+    Create and maintain system and architecture design standards and provide guidance to project teams regarding guiding principles, system and application design, coding and design standards.
+    Develop solution architecture roadmaps based on organizational business units objectives and strategies.
+    Perform other duties as assigned.
+
+Qualifications
+
+    Bachelor's degree in computer science, in an analytical discipline or equivalent experience.
+    Minimum of 2 to 5 years of Information Services / Information Technology architecture experience.
+    10 years of experience in full life cycle solution design using object-oriented analysis and design techniques, preferably in a medium-to-large enterprise environment.
+    Ability to influence across lead changes in a complex enterprise.
+    Experience in comprehensive modeling for applications, services, systems, and data with approaches in component-based, service-oriented, model-driven manner.
+    Expert knowledge and experience with designing and delivering solutions that factor in system performance, usability, quality, cross-system interdependence, scalability and overall cost to develop and maintain.
+    Solid understanding of current Enterprise Architecture frameworks.
+    Sound knowledge and experience with design patterns, service-oriented architecture, solution frameworks, technical patterns and technical services.
+    Ability to balance the long-term ("big picture") and short-term implications of individual decisions and drive actions that are consistent with long-term goals.
+    Strong business sense with the ability to translate complex business requirements into technology solutions.
+    Excellent communication, analytical, and problem-solving skills with ability to manage multiple priorities. Ability to lead others to embrace, perform effectively, and adapt quickly to change.
+    Ability to make excellent and well justified decisions in complex and high-pressure situations and coach others in decision making.
+    Experience implementing, configuring and integrating enterprise commercial off-the-shelf software.
+    Knowledge of MLOps tools (MLflow, SageMaker Pipelines, feature stores) is an asset.
+    Knowledge of and experience in the insurance industry is considered an asset.
+
+Wawanesa is proud to be one of Manitoba's Top Employers, a Kincentric Best Employer in Canada and a Forbes Best Employer in Canada recognizing an exceptional place to work!
+
+Diversity Equity, Inclusion & Belonging
+
+At Wawanesa, we are committed to Diversity, Equity, Inclusion and Belonging (DEIB) and believe that our strength lies in the diversity of our people – this is supported by having a representative workforce.
+
+We welcome applications from all qualified candidates, including racialized persons, women, Indigenous Peoples, persons with disabilities, members of the 2SLGBTQIA+ community, gender-diverse and neurodiverse individuals, and anyone who can contribute to the further diversification of thought and ideas.
+
+We aim to ensure our recruitment process is accessible to all candidates. If you require accommodations during any stage of the recruitment process, please reach out in confidence to jobs@wawanesa.com.
+
+All Wawanesa job applicants are subject to Wawanesa's Privacy Policy.

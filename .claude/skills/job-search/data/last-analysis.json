@@ -1,0 +1,27 @@
+{
+  "skills_match": 100,
+  "matched_skills": [
+    "Security architecture and design",
+    "Network security (firewalls, VLANs, segmentation, zero-trust)",
+    "OT/SCADA security (industrial networks, critical infrastructure)",
+    "Penetration testing and vulnerability assessment",
+    "Incident response and security operations",
+    "Compliance frameworks (ISO 27001, NIST, etc.)",
+    "Identity and access management"
+  ],
+  "green_flags": [
+    "remote",
+    "architecture"
+  ],
+  "red_flags": [
+    "split role"
+  ],
+  "deal_breakers": [
+    "Split operational roles"
+  ],
+  "recommendation": {
+    "decision": "SKIP",
+    "priority": "low",
+    "reason": "Deal-breaker detected: Split operational roles"
+  }
+}

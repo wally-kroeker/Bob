@@ -1,0 +1,70 @@
+About the job
+
+Job Description
+
+Posted Wednesday, December 3, 2025 at 12:00 AM
+
+COMPANY PROFILE:
+
+Red River Mutual is a progressive insurance company with a focus on our customers and employees. We believe everyone has a right to feel safe and protected, and to know that someone is looking out for them. So, we treat our employees like family members – we'll be honest with them, support them, offer a listening ear, admit when we're wrong and be a positive force in their lives and in our communities.
+
+LOCATION: Winnipeg, MB, Hybrid.
+
+SCHEDULE: Full-time
+
+REPORTS TO: Director, Cybersecurity, Infrastructure & CISO
+
+DIRECT REPORTS: N/A
+
+PURPOSE OF POSITION:
+
+This position is dedicated to performing core security operations, including triaging, investigating, and remediating security events. It involves evaluating and deploying new security solutions while maintaining and configuring existing ones. The individual collaborates with the infrastructure team to discover and remediate vulnerabilities and security control weaknesses, supports the IT Risk Management program through operational-level governance, compliance, and risk duties, and actively participates in the delivery of IT Security Roadmap initiatives in support of RRM's cybersecurity targets.
+
+KEY RESPONSIBILITY AREAS:
+
+    Lead security investigations in collaboration with external partners, using security tools to respond, contain, eradicate, and recover from threats.
+    Perform detection engineering tasks in response to potential and active direct threats to systems and infrastructure.
+    Design playbooks and keep incident response plans, continuity strategies, recovery procedures, and tabletop drills up to date; verify backups and recovery objectives, incorporate lessons learned into processes and configurations.
+    Identify, test, and deploy security capabilities based on the current threat landscape and business risks, with defined criteria for evaluating success.
+    Manage zero-trust controls, including device compliance, least privilege access, and network/application segmentation.
+    In coordination with the infrastructure team, implement changes to security tools, platforms and infrastructure configurations.
+    Manage vulnerability management tooling and communicate identified risk and facilitate remediation activities.
+    Maintain and enhance security documentation such as policies, standards, and procedures aligned to NIST CSF and OSFI.
+    Support periodic risk assessments by collecting evidence, validating control effectiveness, and tracking remediation activities.
+    Participate in third-party/vendor security reviews, gathering and validating responses to security questionnaires.
+    Contribute to security awareness and training campaigns and deliver training sessions for IT Staff and employees.
+    Help maintain the organization's information asset inventory and classification register.
+    Support audit readiness and responses to internal or external audit requests.
+    Stay current on emerging threats, security trends, and technology capabilities through research, vendor engagement, and formal training.
+    Complete formal training in alignment with organization objectives and IT training plans.
+    Maintain current knowledge on security tool capabilities and features through vendor discussions, meetings, webinars, and formal training sessions.
+
+QUALIFICATION AND SKILLS:
+
+    Diploma or degree in Computer Science, Information Technology, Cybersecurity, or a related field.
+    10+ years of experience working in an enterprise IT environment, in roles related to IT security, IT Service Desk or IT infrastructure.
+    3+ years of related work experience in an IT security operations role. This includes hands-on detection and response, SIEM administration, and vulnerability management.
+    Ability to act as a Subject Matter Expert and lead cybersecurity initiatives, influencing technical direction and security posture.
+    Solid background in IT Infrastructure operations (networking, endpoint and server management).
+    Hands-on experience with Windows and Linux (or Unix variant).
+    Familiarity with scripting/software development (PowerShell, shell scripts) and ability to create query and mine security telemetry (KQL, SQL or similar).
+    Proficiency with detection and response platforms (e.g., Microsoft Defender XDR, CrowdStrike, Sentinel One).
+    Experience managing security in public cloud platforms (SaaS, PaaS, IaaS).
+    Understanding of Active Directory and Entra ID fundamentals in a security context.
+    Knowledge of networking fundamentals (TCP/IP, DNS, routing, segmentation, VLANs, etc.) and firewall management.
+    Experience with vulnerability management tools, information projection tools and Data Loss Prevention.
+    Demonstrated experience in participating in and supporting Cybersecurity Risk Management initiatives.
+    Excellent written and oral communication and interpersonal skills.
+    Process driven with ability to document, maintain and adhere to standards, procedures, and processes.
+    Demonstrated analytical, prioritization, evaluative, and problem-solving abilities in a high-pressure environment.
+    Certifications such as CISSP, CSSP, SSCP, SC-200, and AZ-500 are considered an asset.
+
+WORKING CONDITIONS:
+
+    Occasional after-hours work may be required.
+    Occasional lifting, pulling, pushing and/or carry objects (up to 50 lbs.)
+    Occasional travel to off-site locations
+
+We thank all applicants for their interest; however only those selected for an interview will be contacted.
+
+Accommodation for applicants with disabilities is available upon request any time during the recruitment process. Our Accessible employment policies and practices are available on request and in accessible formats. Applicants with disabilities can request accessible formats of communication and/or request an alternative method of applying for a position by contacting humanresources@redrivermutual.com or 1-800-370-2888 (toll free).
