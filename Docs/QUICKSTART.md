@@ -14,7 +14,7 @@ Choose your platform:
 ### 1. Clone PAI
 
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/PAI
+git clone https://github.com/wally-kroeker/Bob.git ~/PAI
 ```
 
 ### 2. Create Symlink
@@ -69,7 +69,7 @@ source ~/.zshrc
 ### 1. Clone PAI
 
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/PAI
+git clone https://github.com/wally-kroeker/Bob.git ~/PAI
 ```
 
 ### 2. Create Symlink
@@ -124,7 +124,7 @@ source ~/.bashrc  # or ~/.zshrc if using zsh
 ### 1. Clone PAI
 
 ```powershell
-git clone https://github.com/danielmiessler/PAI.git $env:USERPROFILE\PAI
+git clone https://github.com/wally-kroeker/Bob.git $env:USERPROFILE\PAI
 ```
 
 ### 2. Create Symlink (Run PowerShell as Administrator)
@@ -393,8 +393,8 @@ ls -la ~/.claude/.env
 
 - **Full Documentation:** `~/.claude/Skills/CORE/`
 - **Video Overview:** [PAI Video](https://youtu.be/iKwRWwabkEc)
-- **GitHub Issues:** [Report Problems](https://github.com/danielmiessler/PAI/issues)
-- **Discussions:** [Ask Questions](https://github.com/danielmiessler/PAI/discussions)
+- **GitHub Issues:** [Report Problems](https://github.com/wally-kroeker/Bob/issues)
+- **Discussions:** [Ask Questions](https://github.com/wally-kroeker/Bob/discussions)
 
 ---
 

@@ -15,7 +15,7 @@
 
 <br/>
 
-[![Version](https://img.shields.io/badge/version-0.9.1-blue?style=for-the-badge)](https://github.com/danielmiessler/Personal_AI_Infrastructure/releases)
+[![Version](https://img.shields.io/badge/version-0.9.1-blue?style=for-the-badge)](https://github.com/wally-kroeker/Bob/releases)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Powered-8B5CF6?style=for-the-badge)](https://claude.ai/code)
 
@@ -101,7 +101,7 @@ Choose your platform:
 
 **1. Clone PAI**
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/PAI
+git clone https://github.com/wally-kroeker/Bob.git ~/PAI
 ```
 
 **2. Create Symlink**
@@ -137,7 +137,7 @@ claude
 
 **1. Clone PAI**
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/PAI
+git clone https://github.com/wally-kroeker/Bob.git ~/PAI
 ```
 
 **2. Create Symlink**
@@ -173,7 +173,7 @@ claude
 
 **1. Clone PAI** (PowerShell)
 ```powershell
-git clone https://github.com/danielmiessler/PAI.git $env:USERPROFILE\PAI
+git clone https://github.com/wally-kroeker/Bob.git $env:USERPROFILE\PAI
 ```
 
 **2. Create Symlink** (Run PowerShell as Administrator)
@@ -418,8 +418,8 @@ Kai and I work hard to address issues and PRs throughout the week — we try not
 
 | Channel | Link |
 |---------|------|
-| 🐛 **Issues** | [Report bugs or request features](https://github.com/danielmiessler/Personal_AI_Infrastructure/issues) |
-| 💬 **Discussions** | [Ask questions and share ideas](https://github.com/danielmiessler/Personal_AI_Infrastructure/discussions) |
+| 🐛 **Issues** | [Report bugs or request features](https://github.com/wally-kroeker/Bob/issues) |
+| 💬 **Discussions** | [Ask questions and share ideas](https://github.com/wally-kroeker/Bob/discussions) |
 | 🎥 **Video** | [Watch the full PAI walkthrough](https://youtu.be/iKwRWwabkEc) |
 | 📝 **Blog** | [The Real Internet of Things](https://danielmiessler.com/blog/real-internet-of-things) |
 
