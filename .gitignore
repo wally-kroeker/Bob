@@ -68,13 +68,13 @@ credentials/
 MY_*.md
 
 # Sensitive skill data
-.claude/skills/*/data/*.md
-.claude/skills/*/data/.env
-.claude/skills/*/data/**/*.md
-.claude/skills/telos/data/
-.claude/skills/financial-system/data/
-.claude/skills/taskman/data/*.db
-.claude/skills/taskman/data/*.db.backup-*
+.claude/Skills/*/data/*.md
+.claude/Skills/*/data/.env
+.claude/Skills/*/data/**/*.md
+.claude/Skills/telos/data/
+.claude/Skills/financial-system/data/
+.claude/Skills/taskman/data/*.db
+.claude/Skills/taskman/data/*.db.backup-*
 
 # Archives and backups
 .taskman-archive/
@@ -83,8 +83,8 @@ MY_*.md
 
 # Session data
 .claude/agent-sessions.json
-.claude/history/raw-outputs/
-.claude/scratchpad/
+.claude/History/Raw-Outputs/
+.claude/Scratchpad/
 
 # WSL metadata
 *.Zone.Identifier
@@ -92,3 +92,8 @@ MY_*.md
 # Development
 .dashboard.pids
 bun.lock
+
+# PAI Update System (sideloading)
+.claude/pai_updates/
+.claude/pai_backups/
+.claude/.pai-sync-history

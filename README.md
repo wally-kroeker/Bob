@@ -21,7 +21,7 @@
 
 <br/>
 
-[**Quick Start**](#-quick-start) · [**Documentation**](#-documentation) · [**Examples**](#-examples) · [**Updates**](#-updates) · [**Community**](#-community)
+[**Quick Start**](#-quick-start) · [**Documentation**](#-documentation) · [**Examples**](#-examples) · [**Updating**](#-updating-pai) · [**Community**](#-community)
 
 <br/>
 
@@ -101,21 +101,28 @@ Choose your platform:
 
 **1. Clone PAI**
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/.claude
+git clone https://github.com/danielmiessler/PAI.git ~/PAI
 ```
 
-**2. Run the Setup Wizard**
+**2. Create Symlink**
 ```bash
-~/.claude/.claude/tools/setup/bootstrap.sh
+# Remove existing ~/.claude if present (backup first if needed)
+[ -d ~/.claude ] && mv ~/.claude ~/.claude.backup
+ln -s ~/PAI/.claude ~/.claude
 ```
 
-**3. Add Your API Keys**
+**3. Run the Setup Wizard**
+```bash
+~/.claude/Tools/setup/bootstrap.sh
+```
+
+**4. Add Your API Keys**
 ```bash
 cp ~/.claude/.env.example ~/.claude/.env
 nano ~/.claude/.env
 ```
 
-**4. Start Claude Code**
+**5. Start Claude Code**
 ```bash
 source ~/.zshrc  # Load PAI environment
 claude
@@ -130,21 +137,28 @@ claude
 
 **1. Clone PAI**
 ```bash
-git clone https://github.com/danielmiessler/PAI.git ~/.claude
+git clone https://github.com/danielmiessler/PAI.git ~/PAI
 ```
 
-**2. Run the Setup Wizard**
+**2. Create Symlink**
 ```bash
-~/.claude/.claude/tools/setup/bootstrap.sh
+# Remove existing ~/.claude if present (backup first if needed)
+[ -d ~/.claude ] && mv ~/.claude ~/.claude.backup
+ln -s ~/PAI/.claude ~/.claude
 ```
 
-**3. Add Your API Keys**
+**3. Run the Setup Wizard**
+```bash
+~/.claude/Tools/setup/bootstrap.sh
+```
+
+**4. Add Your API Keys**
 ```bash
 cp ~/.claude/.env.example ~/.claude/.env
 nano ~/.claude/.env
 ```
 
-**4. Start Claude Code**
+**5. Start Claude Code**
 ```bash
 source ~/.bashrc  # Load PAI environment
 claude
@@ -159,21 +173,28 @@ claude
 
 **1. Clone PAI** (PowerShell)
 ```powershell
-git clone https://github.com/danielmiessler/PAI.git $env:USERPROFILE\.claude
+git clone https://github.com/danielmiessler/PAI.git $env:USERPROFILE\PAI
 ```
 
-**2. Run the Setup Wizard**
+**2. Create Symlink** (Run PowerShell as Administrator)
 ```powershell
-& "$env:USERPROFILE\.claude\.claude\tools\setup\bootstrap.ps1"
+# Remove existing .claude if present (backup first if needed)
+if (Test-Path "$env:USERPROFILE\.claude") { Rename-Item "$env:USERPROFILE\.claude" "$env:USERPROFILE\.claude.backup" }
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude" -Target "$env:USERPROFILE\PAI\.claude"
 ```
 
-**3. Add Your API Keys**
+**3. Run the Setup Wizard**
+```powershell
+& "$env:USERPROFILE\.claude\tools\setup\bootstrap.ps1"
+```
+
+**4. Add Your API Keys**
 ```powershell
 Copy-Item "$env:USERPROFILE\.claude\.env.example" "$env:USERPROFILE\.claude\.env"
 notepad "$env:USERPROFILE\.claude\.env"
 ```
 
-**4. Start Claude Code**
+**5. Start Claude Code**
 ```powershell
 # Restart PowerShell to load environment, then:
 claude
@@ -192,23 +213,23 @@ claude
 
 ## 📚 Documentation
 
-All documentation lives in the CORE skill (`.claude/skills/CORE/`):
+All documentation lives in the CORE skill (`.claude/Skills/CORE/`):
 
 | Document | Description |
 |----------|-------------|
-| [**CONSTITUTION.md**](.claude/skills/CORE/CONSTITUTION.md) | System philosophy, architecture, operating principles |
-| [**SkillSystem.md**](.claude/skills/CORE/SkillSystem.md) | **How to create your own skills** — the canonical skill structure guide |
-| [**SKILL.md**](.claude/skills/CORE/SKILL.md) | Main PAI skill with identity, preferences, quick reference |
-| [HookSystem.md](.claude/skills/CORE/HookSystem.md) | Event-driven automation |
-| [HistorySystem.md](.claude/skills/CORE/HistorySystem.md) | Automatic work documentation (UOCS) |
+| [**CONSTITUTION.md**](.claude/Skills/CORE/CONSTITUTION.md) | System philosophy, architecture, operating principles |
+| [**SkillSystem.md**](.claude/Skills/CORE/SkillSystem.md) | **How to create your own skills** — the canonical skill structure guide |
+| [**SKILL.md**](.claude/Skills/CORE/SKILL.md) | Main PAI skill with identity, preferences, quick reference |
+| [HookSystem.md](.claude/Skills/CORE/HookSystem.md) | Event-driven automation |
+| [HistorySystem.md](.claude/Skills/CORE/HistorySystem.md) | Automatic work documentation (UOCS) |
 
 <details>
 <summary><strong>Additional Reference</strong></summary>
 
 | Document | Description |
 |----------|-------------|
-| [Prompting.md](.claude/skills/CORE/Prompting.md) | Prompt engineering patterns |
-| [Aesthetic.md](.claude/skills/CORE/Aesthetic.md) | Visual design system |
+| [Prompting.md](.claude/Skills/CORE/Prompting.md) | Prompt engineering patterns |
+| [Aesthetic.md](.claude/Skills/CORE/Aesthetic.md) | Visual design system |
 | [voice-server/README.md](.claude/voice-server/README.md) | Text-to-speech feedback |
 
 </details>
@@ -217,7 +238,7 @@ All documentation lives in the CORE skill (`.claude/skills/CORE/`):
 
 ## 🎨 Examples
 
-Explore example skills in `.claude/skills/`:
+Explore example skills in `.claude/Skills/`:
 
 | Skill | Description |
 |-------|-------------|
@@ -240,7 +261,7 @@ The Fabric skill now executes patterns **natively** within Claude Code — no CL
 
 ```bash
 # Update patterns from upstream
-.claude/skills/Fabric/tools/update-patterns.sh
+.claude/Skills/Fabric/tools/update-patterns.sh
 ```
 
 Only use `fabric` CLI for YouTube transcripts (`-y`) or pattern updates (`-U`).
@@ -251,7 +272,7 @@ Only use `fabric` CLI for YouTube transcripts (`-y`) or pattern updates (`-U`).
 
 PAI is built on 13 foundational principles that define how to build reliable AI infrastructure.
 
-Complete architecture documentation: [`.claude/skills/CORE/Architecture.md`](.claude/skills/CORE/Architecture.md)
+Complete architecture documentation: [`.claude/Skills/CORE/Architecture.md`](.claude/Skills/CORE/Architecture.md)
 
 ---
 
@@ -372,6 +393,25 @@ Specialized agents with distinct personalities for different tasks. Personality 
 
 <br/>
 
+## 🔄 Updating PAI
+
+PAI includes an intelligent sideloading system that helps you update while preserving your customizations.
+
+```bash
+# In Claude Code, run:
+/paiupdate    # or just /pa
+```
+
+**What happens:**
+1. Your DA fetches the latest PAI to a staging area (doesn't touch your files)
+2. Analyzes differences between upstream and your customizations
+3. Generates a personalized report showing conflicts vs. safe updates
+4. You choose what to adopt — your DA handles the merge
+
+Your custom skills, modified hooks, and personalized settings are **never blindly overwritten**. The system understands that your `env.DA`, custom environment variables, and personal tweaks are intentional.
+
+<br/>
+
 ## 💬 Community
 
 Kai and I work hard to address issues and PRs throughout the week — we try not to get too far behind!
@@ -415,7 +455,7 @@ Kai and I work hard to address issues and PRs throughout the week — we try not
 This release focuses on making PAI fully portable and fork-friendly. Your AI, your identity, your system.
 
 **Observability Dashboard**
-- Complete real-time agent monitoring at `.claude/Observability/`
+- Complete real-time agent monitoring at `.claude/Skills/Observability/`
 - WebSocket streaming of all agent activity
 - Live pulse charts, event timelines, and swim lanes
 - Multiple themes (Tokyo Night, Nord, Catppuccin, etc.)

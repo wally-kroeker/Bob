@@ -102,6 +102,8 @@ ask_input() {
     fi
 
     read -r response
+    # Trim leading/trailing whitespace
+    response=$(echo "$response" | xargs)
     echo "${response:-$default}"
 }
 
@@ -545,7 +547,63 @@ else
 fi
 
 # ============================================
-# Step 8: Claude Code Integration
+# Step 7.5: Fabric Setup (Optional)
+# ============================================
+
+print_header "Step 7.5: Fabric Setup (Optional)"
+
+echo "Fabric is an AI prompting framework with 248+ patterns for various tasks."
+echo "PAI includes native Fabric pattern execution, but the CLI is needed to:"
+echo "  • Download and update patterns from upstream"
+echo "  • Extract YouTube video transcripts"
+echo ""
+
+if ask_yes_no "Would you like to install Fabric?" "n"; then
+    print_step "Installing Fabric..."
+
+    # Install Fabric using official installer
+    curl -sSL https://raw.githubusercontent.com/danielmiessler/fabric/main/install.sh | bash
+
+    # Add fabric to PATH for this session
+    export PATH="$HOME/.local/bin:$PATH"
+
+    # Source shell config to ensure fabric is available
+    if [ -f "$HOME/.bashrc" ]; then
+        source "$HOME/.bashrc" 2>/dev/null || true
+    fi
+    if [ -f "$HOME/.zshrc" ]; then
+        source "$HOME/.zshrc" 2>/dev/null || true
+    fi
+
+    print_success "Fabric installed!"
+
+    # Download patterns from upstream
+    if command_exists fabric; then
+        print_step "Downloading Fabric patterns from upstream..."
+        fabric -U
+        print_success "Patterns downloaded to ~/.config/fabric/patterns"
+
+        # Sync patterns to PAI's local directory
+        if [ -f "$PAI_DIR/.claude/Skills/Fabric/tools/update-patterns.sh" ]; then
+            print_step "Syncing patterns to PAI..."
+            cd "$PAI_DIR/.claude/Skills/Fabric/tools"
+            bash ./update-patterns.sh
+            print_success "Patterns synced to PAI!"
+        else
+            print_warning "Pattern sync script not found. Patterns available in ~/.config/fabric/patterns"
+        fi
+    else
+        print_warning "Fabric installation may require a shell restart."
+        print_info "After restarting your terminal, run: fabric -U"
+        print_info "Then sync patterns: $PAI_DIR/.claude/Skills/Fabric/tools/update-patterns.sh"
+    fi
+else
+    print_info "Skipping Fabric setup. You can install it later with:"
+    echo "  curl -sSL https://raw.githubusercontent.com/danielmiessler/fabric/main/install.sh | bash"
+fi
+
+# ============================================
+# Step 8: AI Assistant Integration
 # ============================================
 
 print_header "Step 8: AI Assistant Integration"
@@ -692,9 +750,9 @@ echo "   • 'Research the latest AI developments'"
 echo "   • 'What skills do you have?'"
 echo ""
 echo "3. ${CYAN}Customize PAI for you:${NC}"
-echo "   • Edit: $PAI_DIR/skills/PAI/SKILL.md"
+echo "   • Edit: $PAI_DIR/Skills/PAI/SKILL.md"
 echo "   • Add API keys: $PAI_DIR/.env"
-echo "   • Read the docs: $PAI_DIR/documentation/how-to-start.md"
+echo "   • Read the docs: $PAI_DIR/Docs/QUICKSTART.md"
 echo ""
 
 print_header "Quick Reference"
@@ -704,13 +762,13 @@ echo ""
 echo "  ${CYAN}cd \$PAI_DIR${NC}                    # Go to PAI directory"
 echo "  ${CYAN}cd \$PAI_DIR && git pull${NC}       # Update PAI to latest version"
 echo "  ${CYAN}open -e \$PAI_DIR/.env${NC}         # Edit API keys"
-echo "  ${CYAN}ls \$PAI_DIR/skills${NC}            # See available skills"
+echo "  ${CYAN}ls \$PAI_DIR/Skills${NC}            # See available skills"
 echo "  ${CYAN}source ~/.zshrc${NC}                # Reload environment"
 echo ""
 
 print_header "Resources"
 
-echo "  📖 Documentation: $PAI_DIR/documentation/"
+echo "  📖 Documentation: $PAI_DIR/Docs/"
 echo "  🌐 GitHub: https://github.com/danielmiessler/Personal_AI_Infrastructure"
 echo "  📝 Blog: https://danielmiessler.com/blog/personal-ai-infrastructure"
 echo "  🎬 Video: https://youtu.be/iKwRWwabkEc"
@@ -730,7 +788,7 @@ echo ""
 
 # Optional: Open documentation
 if ask_yes_no "Would you like to open the getting started guide?" "y"; then
-    open "$PAI_DIR/documentation/how-to-start.md" 2>/dev/null || cat "$PAI_DIR/documentation/how-to-start.md"
+    open "$PAI_DIR/Docs/QUICKSTART.md" 2>/dev/null || cat "$PAI_DIR/Docs/QUICKSTART.md"
 fi
 
 echo ""
