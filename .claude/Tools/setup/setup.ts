@@ -12,6 +12,7 @@ import { logger } from './core/logger';
 import {
   createDirectories,
   writeProfile,
+  updateSettingsJson,
   writePlist,
   updateShellProfile,
   processTemplateFiles,
@@ -149,7 +150,14 @@ async function applyConfiguration(config: SetupConfig, dryRun: boolean): Promise
     }
     p.log.success(`Profile saved to ${config.paiDir}/config/profile.json`);
 
-    // Step 3: Configure voice server (macOS only)
+    // Step 3: Update settings.json env section
+    p.log.step('Updating settings.json...');
+    if (!dryRun) {
+      await updateSettingsJson(config, transaction);
+    }
+    p.log.success('Settings configuration updated (DA, DA_COLOR, PAI_DIR)');
+
+    // Step 4: Configure voice server (macOS only)
     if (config.voiceEnabled) {
       p.log.step('Configuring voice server...');
       if (!dryRun) {
@@ -160,7 +168,7 @@ async function applyConfiguration(config: SetupConfig, dryRun: boolean): Promise
       p.log.info('Voice server: skipped');
     }
 
-    // Step 4: Update shell profile
+    // Step 5: Update shell profile
     if (config.updateShellProfile) {
       p.log.step('Updating shell profile...');
       if (!dryRun) {
@@ -175,7 +183,7 @@ async function applyConfiguration(config: SetupConfig, dryRun: boolean): Promise
       p.log.info('Shell profile: skipped');
     }
 
-    // Step 5: Process template files (agents, etc.)
+    // Step 6: Process template files (agents, etc.)
     p.log.step('Personalizing agent configurations...');
     if (!dryRun) {
       await processTemplateFiles(config, transaction);

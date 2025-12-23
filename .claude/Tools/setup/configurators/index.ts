@@ -82,6 +82,33 @@ export async function writeProfile(config: SetupConfig, transaction: Transaction
 }
 
 /**
+ * Update settings.json env section with DA and DA_COLOR
+ */
+export async function updateSettingsJson(config: SetupConfig, transaction: Transaction): Promise<void> {
+  const settingsPath = join(config.paiDir, 'settings.json');
+
+  if (!existsSync(settingsPath)) {
+    return;
+  }
+
+  await transaction.backup(settingsPath);
+
+  const content = readFileSync(settingsPath, 'utf-8');
+  const settings = JSON.parse(content);
+
+  if (!settings.env) {
+    settings.env = {};
+  }
+
+  settings.env.DA = config.assistantName;
+  settings.env.DA_COLOR = config.assistantColor;
+  settings.env.PAI_DIR = config.paiDir;
+
+  const updatedContent = JSON.stringify(settings, null, 2) + '\n';
+  await writeAtomic(settingsPath, updatedContent);
+}
+
+/**
  * Write voice server plist (macOS only)
  */
 export async function writePlist(config: SetupConfig, transaction: Transaction): Promise<void> {
