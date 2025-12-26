@@ -2,6 +2,34 @@
 
 ## Known Bugs
 
+### settings.json Contains User-Specific PAI_DIR Path
+**Priority**: High
+**Found**: 2025-12-26
+**Status**: OPEN - Needs architectural fix
+
+**Problem**: The `.claude/settings.json` file contains `PAI_DIR` with an absolute path (e.g., `/home/bob/.claude`). When pushing from different machines (dev server vs local), this path gets committed and breaks hooks on other machines.
+
+**Symptoms**:
+```
+Stop hook error: /home/bob/.claude/Hooks/stop-hook.ts: not found
+```
+(When your actual home is `/home/walub/`)
+
+**Current Workaround**: After pulling, manually fix the path:
+```bash
+# In repo settings.json, update PAI_DIR to your actual path
+sed -i 's|/home/bob/.claude|/home/walub/.claude|g' .claude/settings.json
+```
+
+**Proposed Fix Options**:
+1. **Gitignore settings.json** - Use `settings.json.example` as template, copy during setup
+2. **Use placeholder** - Commit with `__PAI_DIR__` placeholder, replace during setup
+3. **Environment-only** - Remove `PAI_DIR` from settings.json, rely on shell export only
+
+**Root Cause**: settings.json is tracked in git but contains machine-specific paths.
+
+---
+
 ### ~~Setup Wizard Missing settings.json Update~~ FIXED
 **Priority**: Medium
 **Found**: 2025-12-07
