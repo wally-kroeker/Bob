@@ -70,3 +70,57 @@ ln -s ~/projects/Personal_AI_Infrastructure/.claude/Agents Agents
 ```
 
 **Settings files are NOT symlinked** - runtime has its own copy that must be kept in sync.
+
+---
+
+## Bob Personality & Tools
+
+### ADHD-Aware CLAUDE.md Template
+
+**Location**: `Docs/templates/CLAUDE.md.bob-example`
+
+This is Bob's full personality template with ADHD support features:
+- Four core support areas (Task Initiation, Time Management, Emotional Regulation, Working Memory)
+- ADHD-optimized communication format (TLDR + Next action)
+- Rabbit hole management and accountability behaviors
+- Strategic context integration (GoodFields, FabLab, StillPoint)
+- Inside jokes and relationship dynamics (🎸 "knowing the chords")
+
+**Installation**:
+```bash
+cp Docs/templates/CLAUDE.md.bob-example ~/.claude/CLAUDE.md
+```
+
+This template should be customized with your own:
+- Personal projects and goals (G1, R1 references)
+- Wisdom references (W1-W13, C1-C7)
+- Inside jokes and communication preferences
+- Lead tracking and follow-up patterns
+
+### Claude Launcher (cc script)
+
+**Location**: `.claude/Tools/claude-launcher.sh`
+
+Interactive model selection launcher for Claude Code with:
+- Anthropic direct API (Sonnet/Opus/Haiku 4.5)
+- LiteLLM proxy support (Gemini, GPT, Ollama models)
+- Automatic web tools configuration (Anthropic WebSearch vs Tavily MCP)
+- Model pricing display and health checks
+
+**Installation**:
+```bash
+# Add to ~/.bashrc
+alias cc="~/projects/Personal_AI_Infrastructure/.claude/Tools/claude-launcher.sh"
+```
+
+**Usage**:
+```bash
+cc              # Launch interactive menu
+cc [args]       # Pass args to claude after model selection
+```
+
+**Requirements**:
+- For LiteLLM: Running proxy at `http://localhost:4000`
+- For Tavily: API key configured in `~/.claude.json` (script will prompt)
+
+---
