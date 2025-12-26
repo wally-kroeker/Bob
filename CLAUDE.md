@@ -2,31 +2,30 @@
 
 ## Known Bugs
 
-### settings.json Contains User-Specific PAI_DIR Path
+### ~~settings.json Contains User-Specific PAI_DIR Path~~ FIXED
 **Priority**: High
 **Found**: 2025-12-26
-**Status**: OPEN - Needs architectural fix
+**Fixed**: 2025-12-26
 
-**Problem**: The `.claude/settings.json` file contains `PAI_DIR` with an absolute path (e.g., `/home/bob/.claude`). When pushing from different machines (dev server vs local), this path gets committed and breaks hooks on other machines.
+~~**Problem**: The `.claude/settings.json` file contains `PAI_DIR` with an absolute path (e.g., `/home/bob/.claude`). When pushing from different machines (dev server vs local), this path gets committed and breaks hooks on other machines.~~
 
-**Symptoms**:
-```
-Stop hook error: /home/bob/.claude/Hooks/stop-hook.ts: not found
-```
-(When your actual home is `/home/walub/`)
+**Resolution**: Implemented gitignore + template approach:
+1. `settings.json` is now gitignored (machine-specific)
+2. `settings.json.example` is the tracked template with placeholders (`__PAI_DIR__`, `__DA__`, `__DA_COLOR__`)
+3. Setup script (`configurators/index.ts`) copies template and replaces placeholders if settings.json doesn't exist
+4. Each machine has its own settings.json that won't conflict on push/pull
 
-**Current Workaround**: After pulling, manually fix the path:
+**After cloning/pulling on new machine**:
 ```bash
-# In repo settings.json, update PAI_DIR to your actual path
-sed -i 's|/home/bob/.claude|/home/walub/.claude|g' .claude/settings.json
+# Option 1: Run setup wizard
+bash .claude/Tools/setup/bootstrap.sh
+
+# Option 2: Manual copy + replace
+cp .claude/settings.json.example .claude/settings.json
+sed -i 's|__PAI_DIR__|/home/youruser/.claude|g' .claude/settings.json
+sed -i 's|__DA__|YourAssistantName|g' .claude/settings.json
+sed -i 's|__DA_COLOR__|green|g' .claude/settings.json
 ```
-
-**Proposed Fix Options**:
-1. **Gitignore settings.json** - Use `settings.json.example` as template, copy during setup
-2. **Use placeholder** - Commit with `__PAI_DIR__` placeholder, replace during setup
-3. **Environment-only** - Remove `PAI_DIR` from settings.json, rely on shell export only
-
-**Root Cause**: settings.json is tracked in git but contains machine-specific paths.
 
 ---
 

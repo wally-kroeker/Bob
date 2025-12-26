@@ -83,12 +83,41 @@ export async function writeProfile(config: SetupConfig, transaction: Transaction
 
 /**
  * Update settings.json env section with DA and DA_COLOR
+ * If settings.json doesn't exist, copy from settings.json.example template
  */
 export async function updateSettingsJson(config: SetupConfig, transaction: Transaction): Promise<void> {
   const settingsPath = join(config.paiDir, 'settings.json');
 
+  // Find the repo's settings.json.example (works whether paiDir is runtime or repo)
+  const possibleTemplatePaths = [
+    join(dirname(config.paiDir), 'Personal_AI_Infrastructure', '.claude', 'settings.json.example'),
+    join(config.paiDir, 'settings.json.example'),
+    join(config.paiDir, '..', '.claude', 'settings.json.example'),
+  ];
+
   if (!existsSync(settingsPath)) {
-    return;
+    // Try to find and copy from template
+    let templatePath: string | null = null;
+    for (const path of possibleTemplatePaths) {
+      if (existsSync(path)) {
+        templatePath = path;
+        break;
+      }
+    }
+
+    if (templatePath) {
+      // Copy template to settings.json
+      let content = readFileSync(templatePath, 'utf-8');
+      // Replace placeholders
+      content = content.replace(/__PAI_DIR__/g, config.paiDir);
+      content = content.replace(/__DA__/g, config.assistantName);
+      content = content.replace(/__DA_COLOR__/g, config.assistantColor);
+      await writeAtomic(settingsPath, content);
+      return;
+    } else {
+      // No template found, nothing to do
+      return;
+    }
   }
 
   await transaction.backup(settingsPath);

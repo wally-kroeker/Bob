@@ -67,6 +67,10 @@ credentials/
 .mcp.json.personal
 MY_*.md
 
+# Machine-specific settings (use settings.json.example as template)
+.claude/settings.json
+.claude/settings.local.json
+
 # Sensitive skill data
 .claude/Skills/*/data/*.md
 .claude/Skills/*/data/.env
