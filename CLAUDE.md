@@ -88,27 +88,34 @@ The main `settings.json` must have `Skill(*)` in the allow list to enable all sk
 
 ## Bob Personality & Tools
 
-### ADHD-Aware CLAUDE.md Template
+### User CLAUDE.md Templates
 
-**Location**: `Docs/templates/CLAUDE.md.bob-example`
+The `~/.claude/CLAUDE.md` file defines your AI assistant's personality and how it interacts with you. We provide two files:
 
-This is Bob's full personality template with ADHD support features:
-- Four core support areas (Task Initiation, Time Management, Emotional Regulation, Working Memory)
-- ADHD-optimized communication format (TLDR + Next action)
-- Rabbit hole management and accountability behaviors
-- Strategic context integration (GoodFields, FabLab, StillPoint)
-- Inside jokes and relationship dynamics (🎸 "knowing the chords")
+**1. Generic Template** - `Docs/templates/CLAUDE.md.template`
+
+Portable template with placeholders for creating your own assistant:
+- Core identity and personality traits
+- Cognitive support patterns (optional ADHD/executive function support)
+- Communication preferences and response format
+- Accountability behaviors
+- Strategic context for your projects
 
 **Installation**:
 ```bash
-cp Docs/templates/CLAUDE.md.bob-example ~/.claude/CLAUDE.md
+cp Docs/templates/CLAUDE.md.template ~/.claude/CLAUDE.md
+# Then customize with your own name, projects, and preferences
 ```
 
-This template should be customized with your own:
-- Personal projects and goals (G1, R1 references)
-- Wisdom references (W1-W13, C1-C7)
-- Inside jokes and communication preferences
-- Lead tracking and follow-up patterns
+**2. Wally's Bob** - `Docs/templates/CLAUDE.md.bob`
+
+Working example showing how the template looks when filled in:
+- Bob as ADHD helper and business partner
+- Specific context (GoodFields, FabLab, StillPoint)
+- Inside jokes (🎸 "knowing the chords")
+- Integration with telos skill for wisdom references (W1-W15, C1-C7)
+
+Use this as a reference for how to customize the template.
 
 ### Claude Launcher (cc script)
 
