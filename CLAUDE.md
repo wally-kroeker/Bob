@@ -69,7 +69,20 @@ ln -s ~/projects/Personal_AI_Infrastructure/.claude/Commands Commands
 ln -s ~/projects/Personal_AI_Infrastructure/.claude/Agents Agents
 ```
 
-**Settings files are NOT symlinked** - runtime has its own copy that must be kept in sync.
+**Settings files are HARDLINKED** - `~/.claude/settings.json` and `~/.claude/settings.local.json` are hardlinked to the project versions, so changes sync automatically.
+
+**CRITICAL - Skill Permissions**:
+The main `settings.json` must have `Skill(*)` in the allow list to enable all skills globally:
+```json
+"permissions": {
+  "allow": [
+    "Bash", "Read", "Write", "Edit", "MultiEdit", "Glob", "Grep",
+    "WebFetch(domain:*)", "WebSearch", "NotebookRead", "NotebookEdit",
+    "TodoWrite", "ExitPlanMode", "Task", "mcp__*",
+    "Skill(*)"  // Required for all skills to work
+  ]
+}
+```
 
 ---
 
